@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.styles.scss';
-import { ReactComponent as Logo } from '../../assets/crown.svg'
+import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 
