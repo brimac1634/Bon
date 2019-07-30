@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './sign-in.styles.scss';
-import { withRouter } from 'react-router-dom';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils.js';
@@ -20,7 +19,6 @@ class SignIn extends Component {
 		try {
 			await auth.signInWithEmailAndPassword(email, password);
 			this.setState({email: '', password: ''})
-			this.props.history.push('/')
 		} catch (error) {
 			console.log(error);
 		}
@@ -69,4 +67,4 @@ class SignIn extends Component {
 	}
 }
 
-export default withRouter(SignIn);
+export default SignIn;

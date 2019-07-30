@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
+import CartIcon from '../cart-icon/cart-icon.component';
+import Trigger from '../dropdown/dropdown.trigger.component';
+import Controller from '../dropdown/dropdown.controller.component';
+import Dropdown from '../dropdown/dropdown.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 const mapStateToProps = state => ({
 	currentUser: state.user.currentUser
@@ -29,6 +34,16 @@ const Header = ({ currentUser }) => (
 				:
 				<Link className='option' to='/signin'>SIGN IN</Link>
 			}
+			<Controller>
+				<Trigger>
+					<div>
+						<CartIcon />
+					</div>
+				</Trigger>
+				<Dropdown>
+					<CartDropdown />
+				</Dropdown>
+			</Controller>
 		</div>
 	</div>
 )
