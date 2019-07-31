@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import HomePage from './pages/homepage/homepage.component';
+import Philosphy from './pages/philosophy/philosophy.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
@@ -50,6 +51,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={HomePage}/> 
             <Route path='/shop' component={ShopPage}/>
+            <Route path='/philosophy' component={Philosphy}/>
             <Route 
               exact 
               path='/signin' 
