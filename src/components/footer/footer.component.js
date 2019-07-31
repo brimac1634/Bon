@@ -7,15 +7,30 @@ import { ReactComponent as EmailIcon } from '../../assets/email.svg'
 const Footer = () => (
 	<div className='footer'>
 		<div className='icon-set'>
-			<div className='icon' >
+			<a 
+				className='icon'
+				href='https://www.instagram.com/bonvivantcollection/' 
+				target='_blank' 
+				rel='noopener noreferrer'
+			>
 				<InstaIcon />
-			</div>
-			<div className='icon' >
+			</a>
+			<a 
+				className='icon'
+				href='mailto:info@bonvivantcollection.com?Subject=I%20am%20interested%20in%20Bon%20Vivant!' 
+				target='_blank' 
+				rel='noopener noreferrer'
+			>
 				<EmailIcon />
-			</div>
-			<div className='icon' >
+			</a>
+			<a 
+				className='icon'
+				href='https://www.facebook.com/bonvivantcollection/' 
+				target='_blank' 
+				rel='noopener noreferrer'
+			>
 				<FacebookIcon />
-			</div>
+			</a>
 		</div>
 	</div>
 )

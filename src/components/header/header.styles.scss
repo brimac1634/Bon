@@ -24,8 +24,18 @@
     justify-content: flex-end;
     cursor: pointer;
 
+    &:hover .option {
+      color: gray;
+    }
+
     .option {
+      font-size: 18px;
       padding: 10px 15px;
+      transition: all 200ms ease-in-out;
+
+      &:hover {
+        color: black;
+      }
     }
   }
 }
