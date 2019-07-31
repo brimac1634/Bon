@@ -1,11 +1,14 @@
 import React from 'react';
 import './philosophy.styles.scss';
+import ParallaxRow from '../../components/parallax-row/parallax-row.component';
+import philoHero from '../../assets/philo-hero.jpg';
 import philo1 from '../../assets/philo1.jpg';
 import philo2 from '../../assets/philo2.jpg';
 
 const Philosphy = () => {
 	return (
 		<div className='philosphy'>
+			<ParallaxRow background={`url(${philoHero})`} />
 			<div className='row'>
 				<div className='col'>
 					<p className='text'>
