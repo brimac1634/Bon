@@ -1,16 +1,20 @@
 import React from 'react';
-import './cart-icon.styles.scss';
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import { connect } from 'react-redux'; 
 
+import { selectCartItemsCount } from '../../redux/cart/cart.selectors';
+
+import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
+
+import './cart-icon.styles.scss';
+
 const mapStateToProps = state => ({
-	currentUser: state.user.currentUser
+	itemCount: selectCartItemsCount(state)
 })
 
-const CartIcon = () => (
+const CartIcon = ({ itemCount }) => (
 	<div className='cart-icon'>
 		<ShoppingIcon className='shopping-icon' />
-		<span className='item-count'>0</span>
+		<span className='item-count'>{ itemCount }</span>
 	</div>
 )
 
