@@ -1,8 +1,9 @@
 import React from 'react';
-import './header.styles.scss';
-import { connect } from 'react-redux'; 
-import { ReactComponent as Logo } from '../../assets/logo.svg'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'; 
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/cart-icon.component';
 import Trigger from '../dropdown/dropdown.trigger.component';
@@ -10,8 +11,11 @@ import Controller from '../dropdown/dropdown.controller.component';
 import Dropdown from '../dropdown/dropdown.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
+import { ReactComponent as Logo } from '../../assets/logo.svg'
+import './header.styles.scss';
+
 const mapStateToProps = state => ({
-	currentUser: state.user.currentUser
+	currentUser: selectCurrentUser(state)
 })
 
 const Header = ({ currentUser }) => (
