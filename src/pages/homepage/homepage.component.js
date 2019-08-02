@@ -39,7 +39,7 @@ class HomePage extends Component {
 				</ParallaxRow>
 				<div className='row grey'>
 					<div className='col'>
-						<h1>
+						<h1 className='center with-border'>
 							Men's Haberdashery specialising in handmade tailored clothing for those who live well.
 						</h1>
 					</div>
@@ -49,7 +49,7 @@ class HomePage extends Component {
 				</div>
 				<div className='row grey'>
 					<div className='col'>
-						<p className='text'>
+						<p className='text center with-border'>
 							Bon Vivant is an idea of appreciation - that there exists an intrinsic value to things that give joy in life. These works consist of ideas and memories that bear a connection to the past. What was before considered dated has been transmuted by the mere passing of years to a status at once modern and prevalent.
 						</p>
 					</div>
@@ -59,7 +59,7 @@ class HomePage extends Component {
 						<img className='front-door' src={frontDoor} alt='front door' />
 					</div>
 					<div className='col'>
-						<h1 className='center-text'>
+						<h1 className='center'>
 							keep up to date with special offers
 						</h1>
 						<form onSubmit={this.handleSubmit}>

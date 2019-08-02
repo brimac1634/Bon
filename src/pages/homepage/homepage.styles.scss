@@ -47,14 +47,19 @@
 				width: 100%;
 			}
 
-			.center-text {
+			.center {
 				text-align: center;
+
+				&.with-border {
+					padding: 40px 0;
+					border-top: solid 1px darkgrey;
+					border-bottom: solid 1px darkgrey;
+				}
 			}
 
 			.text {
 				font-size: 140%;
 				line-height: 30px;
-				margin: 0 0 22px 0;
 			}
 		}
 	}
