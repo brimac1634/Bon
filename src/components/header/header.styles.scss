@@ -21,7 +21,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    cursor: pointer;
 
     &:hover .option {
       color: gray;
@@ -32,6 +31,7 @@
       font-weight: 600;
       padding: 10px 15px;
       transition: all 200ms ease-in-out;
+      cursor: pointer;
 
       &:hover {
         color: black;
