@@ -22,14 +22,15 @@ class ParallaxRow extends Component {
 	};
 
 	render() {
-		const { children, background } = this.props;
+		const { children, background, height } = this.props;
 		const { offset } = this.state;
 		return (
 			<div 
 				className='parallax-background' 
 				style={{ 
 					backgroundImage: background,
-					backgroundPositionY: offset / 5
+					backgroundPositionY: offset / 5,
+					height: height || null
 				}}
 			>
 				<div

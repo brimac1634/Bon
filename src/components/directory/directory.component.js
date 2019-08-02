@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import './directory.styles.scss';
+
 import MenuItem from '../menu-item/menu-item.component';
+
+import './directory.styles.scss';
+import shorts from '../../assets/shorts.jpg';
+import accessories from '../../assets/accessories.jpg';
+import jackets from '../../assets/jackets.jpg';
+import shirts from '../../assets/shirts.jpg';
+import trousers from '../../assets/trousers.jpg';
+
 
 class Directory extends Component {
 	constructor() {
@@ -8,33 +16,33 @@ class Directory extends Component {
 		this.state = {
 			sections: [
 			  {
-			    title: 'hats',
-			    imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
+			    title: 'shorts',
+			    imageUrl: shorts,
 			    id: 1,
 			    linkUrl: 'shop/hats'
 			  },
 			  {
-			    title: 'jackets',
-			    imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
+			    title: 'accessories',
+			    imageUrl: accessories,
 			    id: 2,
 			    linkUrl: 'shop/jackets'
 			  },
 			  {
-			    title: 'sneakers',
-			    imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
+			    title: 'shirts',
+			    imageUrl: shirts,
 			    id: 3,
 			    linkUrl: 'shop/sneakers'
 			  },
 			  {
-			    title: 'womens',
-			    imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
+			    title: 'trousers',
+			    imageUrl: trousers,
 			    size: 'large',
 			    id: 4,
 			    linkUrl: 'shop/womens'
 			  },
 			  {
-			    title: 'mens',
-			    imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
+			    title: 'jackets',
+			    imageUrl: jackets,
 			    size: 'large',
 			    id: 5,
 			    linkUrl: 'shop/mens'

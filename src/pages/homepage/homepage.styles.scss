@@ -1,6 +1,61 @@
 .homepage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 80px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.hero-content {
+		height: 100%;
+		padding: 0 80px;
+		text-align: center;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-around;
+		overflow: hidden;
+
+		.title {
+			font-size: 700%;
+			color: white;
+			margin-bottom: 20%;
+		}
+
+		img {
+			max-width: 50%;
+			max-height: 90%;
+		}
+	}
+
+	.row {
+		padding: 30px 60px;
+		width: 100%;
+		height: auto;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+
+		&.grey {
+			background-color: #f6f6f6; 
+		}
+
+		.col {
+			margin: 20px 0;
+			padding: 20px;
+			width: 100%;
+			max-width: 500px;
+
+			.front-door {
+				width: 100%;
+			}
+
+			.center-text {
+				text-align: center;
+			}
+
+			.text {
+				font-size: 140%;
+				line-height: 30px;
+				margin: 0 0 22px 0;
+			}
+		}
+	}
 }
