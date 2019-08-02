@@ -20,7 +20,7 @@ class Trigger extends Component {
 	    });
 
 		return (
-			<div>
+			<div name='trigger'>
 				{childrenWithProps}
 			</div>
 		);

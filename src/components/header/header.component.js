@@ -6,8 +6,8 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/cart-icon.component';
-import Trigger from '../dropdown/dropdown.trigger.component';
-import Controller from '../dropdown/dropdown.controller.component';
+import Trigger from '../dropdown/dropdown-trigger.component';
+import Controller from '../dropdown/dropdown-controller.component';
 import Dropdown from '../dropdown/dropdown.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
