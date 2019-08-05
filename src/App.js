@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
+import LogoLoader from './components/logo-loader/logo-loader.component';
 import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
 import Philosphy from './pages/philosophy/philosophy.component';
@@ -14,6 +15,7 @@ import Checkout from './pages/checkout/checkout.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
+
 
 import './App.css';
 
@@ -26,6 +28,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { loading: true }
+  }
   unsubscribeFromAuth = null
 
   componentDidMount() {
@@ -38,9 +44,11 @@ class App extends Component {
             id: snapshot.id,
             ...snapshot.data()
           })
+          this.setState({ loading: false })
         })
       } else {
         setCurrentUser(userAuth);
+        this.setState({ loading: false })
       }
     })
   }
@@ -50,30 +58,40 @@ class App extends Component {
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <div>
-        <Header />
-        <div className='main'>
-          <Switch>
-            <Route exact path='/' component={HomePage}/> 
-            <Route path='/shop' component={ShopPage}/>
-            <Route path='/gallery' component={Gallery}/>
-            <Route path='/philosophy' component={Philosphy}/>
-            <Route exact path='/checkout' component={Checkout}/>
-            <Route 
-              exact 
-              path='/signin' 
-              render={() =>
-                this.props.currentUser ? (
-                  <Redirect to={'/'} />
-                ) : (
-                  <SignInAndSignUpPage />
-                )
-              }
-            />
-          </Switch>
-        </div>
-        <Footer />
+        {!loading &&
+          <div>
+            <Header />
+            <div className='main'>
+              <Switch>
+                <Route exact path='/' component={HomePage}/> 
+                <Route path='/shop' component={ShopPage}/>
+                <Route path='/gallery' component={Gallery}/>
+                <Route path='/philosophy' component={Philosphy}/>
+                <Route exact path='/checkout' component={Checkout}/>
+                <Route 
+                  exact 
+                  path='/signin' 
+                  render={() =>
+                    this.props.currentUser ? (
+                      <Redirect to={'/'} />
+                    ) : (
+                      <SignInAndSignUpPage />
+                    )
+                  }
+                />
+              </Switch>
+            </div>
+            <Footer />
+          </div>
+        }
+        {loading &&
+          <div className='full-loader'>
+            <LogoLoader />
+          </div>
+        }
       </div>
     );
   }
