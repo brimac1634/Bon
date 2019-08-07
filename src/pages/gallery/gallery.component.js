@@ -8,6 +8,8 @@ class Gallery extends Component {
 
 	componentDidMount() {
 		//fetch gallery images
+		// fetch('graph.facebook.com/6844260068/media')
+		// .then(data => console.log(data))
 	}
 
 	render() {
