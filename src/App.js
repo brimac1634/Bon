@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
-import LogoLoader from './components/logo-loader/logo-loader.component';
+import Loader from './components/loader/loader.component';
 import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
 import Philosphy from './pages/philosophy/philosophy.component';
@@ -88,9 +88,7 @@ class App extends Component {
           </div>
         }
         {loading &&
-          <div className='full-loader'>
-            <LogoLoader />
-          </div>
+          <Loader />
         }
       </div>
     );
