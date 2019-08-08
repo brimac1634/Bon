@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 import CollectionContainer from '../collection/collection.container';
 
 const mapDispatchToProps = dispatch => ({
-	fetchCollectionsAsync: () => dispatch(fetchCollectionsAsync())
+	fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 })
 
 class ShopPage extends Component {
 	componentDidMount() {
-		const { fetchCollectionsAsync } = this.props;
-		fetchCollectionsAsync();
+		const { fetchCollectionsStart } = this.props;
+		fetchCollectionsStart();
 	}
 
 	render() {
