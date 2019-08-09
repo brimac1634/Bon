@@ -36,7 +36,10 @@ class HomePage extends Component {
 				<ParallaxRow background={`url(${fern})`} height='600px'>
 					<div className='hero-content'>
 						<img src={itemTrans} alt='bust'/>
-						<h1 className='title'>Bon Vivant</h1>
+						<div className='title-container'>
+							<h1 className='title'>Bon Vivant</h1>
+							<h1 className='title'>Collection</h1>
+						</div>
 					</div>
 				</ParallaxRow>
 				<div className='row grey'>

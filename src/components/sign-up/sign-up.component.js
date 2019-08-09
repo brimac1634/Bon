@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import './sign-up.styles.scss';
+import { Link } from 'react-router-dom';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+
+import './sign-up.styles.scss';
 
 class SignUp extends Component {
 	constructor(props) {
@@ -81,7 +84,10 @@ class SignUp extends Component {
 						handleChange={this.handleChange}
 						required 
 					/>
-					<CustomButton type='submit'> Sign Up </CustomButton>
+					<div className='btn-container'>
+						<CustomButton type='submit'> Sign Up </CustomButton>
+						<Link to='/privacy-policy'> Privacy Policy </Link>
+					</div>
 				</form>
 			</div>
 		)

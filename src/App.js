@@ -54,12 +54,13 @@ class App extends Component {
                   path='/signin' 
                   render={() =>
                     this.props.currentUser ? (
-                      <Redirect to={'/'} />
+                      <Redirect to={'/'}/>
                     ) : (
                       <SignInAndSignUpPage />
                     )
                   }
                 />
+                <Redirect to='/'/>
               </Switch>
             </div>
             <Footer />
