@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { signOutStart } from '../../redux/user/user.actions';
 
-import { auth } from '../../firebase/firebase.utils';
 import CartIcon from '../cart-icon/cart-icon.component';
 import Trigger from '../dropdown/dropdown-trigger.component';
 import Controller from '../dropdown/dropdown-controller.component';
@@ -18,7 +18,11 @@ const mapStateToProps = state => ({
 	currentUser: selectCurrentUser(state)
 })
 
-const Header = ({ currentUser }) => (
+const mapDispatchToProps = dispatch => ({
+	signOutStart: () => dispatch(signOutStart())
+})
+
+const Header = ({ currentUser, signOutStart }) => (
 	<div className='header'>
 		<Link className='logo-container' to={'/'}>
 			<Logo className='logo' />
@@ -38,7 +42,7 @@ const Header = ({ currentUser }) => (
 			</Link>
 			{
 				currentUser ?
-				<div className='option' onClick={()=>auth.signOut()}>
+				<div className='option' onClick={signOutStart}>
 					SIGN OUT
 				</div>
 				:
@@ -58,4 +62,4 @@ const Header = ({ currentUser }) => (
 	</div>
 )
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

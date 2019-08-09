@@ -13,49 +13,31 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Checkout from './pages/checkout/checkout.component';
 
-import { selectCurrentUser } from './redux/user/user.selectors';
-
+import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
+import { checkUserSession } from './redux/user/user.actions';
 
 import './App.css';
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  isFetchingUser: selectIsUserFetching
+})
+
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
 })
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { loading: false }
-  }
-  unsubscribeFromAuth = null
-
   componentDidMount() {
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     userRef.onSnapshot(snapshot => {
-    //       setCurrentUser({
-    //         id: snapshot.id,
-    //         ...snapshot.data()
-    //       })
-    //       this.setState({ loading: false })
-    //     })
-    //   } else {
-    //     setCurrentUser(userAuth);
-    //     this.setState({ loading: false })
-    //   }
-    // })
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    const { checkUserSession } = this.props;
+    checkUserSession();
   }
 
   render() {
-    const { loading } = this.state;
+    const { isFetchingUser } = this.props;
     return (
       <div>
-        {!loading &&
+        {!isFetchingUser &&
           <div>
             <Header />
             <div className='main'>
@@ -81,7 +63,7 @@ class App extends Component {
             <Footer />
           </div>
         }
-        {loading &&
+        {isFetchingUser &&
           <Loader />
         }
       </div>
@@ -89,4 +71,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
