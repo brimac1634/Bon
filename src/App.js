@@ -10,6 +10,7 @@ import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
 import Philosphy from './pages/philosophy/philosophy.component';
 import ShopPage from './pages/shop/shop.component';
+import PrivacyPolicy from './pages/privacy-policy/privacy-policy.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Checkout from './pages/checkout/checkout.component';
 
@@ -46,6 +47,7 @@ class App extends Component {
                 <Route path='/shop' component={ShopPage}/>
                 <Route path='/gallery' component={Gallery}/>
                 <Route path='/philosophy' component={Philosphy}/>
+                <Route path='/privacy-policy' component={PrivacyPolicy}/>
                 <Route exact path='/checkout' component={Checkout}/>
                 <Route 
                   exact 

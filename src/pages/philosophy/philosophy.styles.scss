@@ -6,7 +6,11 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
-
+	
+	&.grey {
+		background-color: #f6f6f6; 
+	}
+	
 	.col {
 		margin: 20px 0;
 		padding: 20px;

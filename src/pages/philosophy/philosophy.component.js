@@ -25,7 +25,7 @@ const Philosphy = () => {
 					<img src={philo1} alt='model' width='100%'/>
 				</div>
 			</div>
-			<div className='row'>
+			<div className='row grey'>
 				<div className='col'>
 					<h2>
 						“What seems to me the highest and the most difficult achievement of Art is not to make us laugh or cry, or to rouse our lust or our anger, but to do as nature does — that is, fill us with wonderment.”
