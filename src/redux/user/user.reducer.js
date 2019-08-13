@@ -12,6 +12,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
 		case UserActionTypes.GOOGLE_SIGN_IN_START:
 		case UserActionTypes.EMAIL_SIGN_IN_START:
 		case UserActionTypes.SIGN_OUT_START:
+		case UserActionTypes.SIGN_UP_START:
 			return {
 				...state,
 				isFetching: true
@@ -32,6 +33,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
 			}
 		case UserActionTypes.SIGN_IN_FAILURE:
 		case UserActionTypes.SIGN_OUT_FAILURE:
+		case UserActionTypes.SIGN_UP_FAILURE:
 			return {
 				...state,
 				isFetching: false,
