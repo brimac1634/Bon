@@ -1,0 +1,52 @@
+.loader-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: white;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.logo-loader {
+		position: relative;
+		overflow: hidden;
+		
+		img {
+			width: 160px;
+			height: auto;
+		}
+
+		.animation-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			.load-animation {
+				content: "";
+				display: block;
+				width: 160px;
+				height: 160px;
+				border-radius: 50%;
+				background-color: #e0e0e0;
+				opacity: 0.4;
+				animation: grow 1s ease-in-out infinite alternate;
+			}
+		}
+
+		@keyframes grow {
+		    0% {
+		        -webkit-transform:scale(0);
+		    }
+		    100% {
+		        -webkit-transform:scale(2);
+		    }
+		}
+	}
+}
