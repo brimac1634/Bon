@@ -1,13 +1,15 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
+import axios from 'axios';
 
 import { fetchGallerySuccess, fetchGalleryFailure } from './gallery.actions';
 
 import GalleryActionTypes from './gallery.types';
 
 const getMediaList = () => {
-	// return fetch(mediaUrl).then(res => res.json())
-	// 	.then(list => list)
-	// 	.catch(err => err)
+	axios({
+		url: 'gallery',
+		
+	})
 }
 
 export function* fetchGalleryAsync() {
