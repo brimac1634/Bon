@@ -61,6 +61,12 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 	}, {})
 }
 
+export const convertGalleryData = (gallery) => {
+	return gallery.docs.map(doc => {
+		return doc.data()
+	})
+}
+
 export const getCurrentUser = () => {
 	return new Promise((resolve, reject) => {
 		const unsubscribe = auth.onAuthStateChanged(userAuth => {

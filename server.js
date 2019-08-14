@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const path = require('path');
+const { updateRecentMedia } = require('./firebase/firebase.utils.js');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -44,37 +45,32 @@ app.post('/payment', (req, res) => {
 	})
 })
 
-app.get('/gallery', (req, res) => {
+
+const getRecentMedia = async () => {
 	const instaToken = process.env.INSTA_TOKEN;
-
-	const getRecentMedia = async () => {
-		try {
-			const mediaIDs = await axios({
-				url: `https://graph.facebook.com/v3.2/17841406842055532/media?access_token=${instaToken}`,
-				method: 'get'
-			})
-			const { data } = mediaIDs.data;
-			if (!data) return;
-			const mediaPromises = data.map(async ({ id }) => {
-				try {
-					const response = await axios.get(`https://graph.facebook.com/v2.12/${id}?access_token=${instaToken}&fields=media_type,media_url,thumbnail_url,permalink,caption`)
-					return response.data
-				} catch (err) {
-					console.log(err)
-					res.status(500).send({err})
-				}
-			})
-			const media = await Promise.all(mediaPromises)
-			console.log(media)
-			res.status(200).send({ data: media })
-		} catch (err) {
-			console.log(err)
-			res.status(500).send({err})
-		}
+	try {
+		const mediaIDs = await axios({
+			url: `https://graph.facebook.com/v3.2/17841406842055532/media?access_token=${instaToken}`,
+			method: 'get'
+		})
+		const { data } = mediaIDs.data;
+		if (!data) return;
+		const mediaPromises = data.map(async ({ id }) => {
+			try {
+				const response = await axios.get(`https://graph.facebook.com/v2.12/${id}?access_token=${instaToken}&fields=media_type,media_url,thumbnail_url,permalink,caption`)
+				const { caption, media_type, media_url } = response.data;
+				return { caption, mediaType: media_type, mediaUrl: media_url }
+			} catch (err) {
+				console.log(err)
+				res.status(500).send({err})
+			}
+		})
+		const media = await Promise.all(mediaPromises)
+		updateRecentMedia(media)
+	} catch (err) {
+		res.status(500).send({err})
 	}
-	getRecentMedia()
-})
-
+}
 
 
 
