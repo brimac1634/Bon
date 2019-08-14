@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Fade from 'react-reveal/Fade';
 
 import ParallaxRow from '../../components/parallax-row/parallax-row.component';
 import Directory from '../../components/directory/directory.component';
@@ -35,19 +36,23 @@ class HomePage extends Component {
 			<div className='homepage'>
 				<ParallaxRow background={`url(${fern})`} height='600px'>
 					<div className='hero-content'>
-						<img src={itemTrans} alt='bust'/>
-						<div className='title-container'>
-							<h1 className='title'>Bon Vivant</h1>
-							<h1 className='title'>Collection</h1>
-						</div>
+						<Fade bottom>
+							<img src={itemTrans} alt='bust'/>
+							<div className='title-container'>
+								<h1 className='title'>Bon Vivant</h1>
+								<h1 className='title'>Collection</h1>
+							</div>
+						</Fade>
 					</div>
 				</ParallaxRow>
 				<div className='row grey'>
 					<div className='col'>
-						<img className='illustration' src={needle} alt='needle' />
-						<h1 className='center with-border'>
-							Men's Haberdashery specialising in handmade tailored clothing for those who live well.
-						</h1>
+						<Fade bottom>
+							<img className='illustration' src={needle} alt='needle' />
+							<h1 className='center with-border'>
+								Men's Haberdashery specialising in handmade tailored clothing for those who live well.
+							</h1>
+						</Fade>
 					</div>
 				</div>
 				<div className='row'>
@@ -55,10 +60,12 @@ class HomePage extends Component {
 				</div>
 				<div className='row grey'>
 					<div className='col'>
-						<img className='scissors' src={scissors} alt='needle' />
-						<p className='text center with-border'>
-							Bon Vivant is an idea of appreciation - that there exists an intrinsic value to things that give joy in life. These works consist of ideas and memories that bear a connection to the past. What was before considered dated has been transmuted by the mere passing of years to a status at once modern and prevalent.
-						</p>
+						<Fade bottom>
+							<img className='scissors' src={scissors} alt='needle' />
+							<p className='text center with-border'>
+								Bon Vivant is an idea of appreciation - that there exists an intrinsic value to things that give joy in life. These works consist of ideas and memories that bear a connection to the past. What was before considered dated has been transmuted by the mere passing of years to a status at once modern and prevalent.
+							</p>
+						</Fade>
 					</div>
 				</div>
 				<div className='row'>

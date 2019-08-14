@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Fade from 'react-reveal/Fade';
 
 import GalleryItem from '../../components/gallery-item/gallery-item.component';
 
@@ -27,7 +28,9 @@ class Gallery extends Component {
 			<div className='gallery-page'>
 				{gallery &&
 					gallery.map(({...data}, i) => (
-						<GalleryItem key={i} {...data} />
+						<Fade key={i}>
+							<GalleryItem {...data} />
+						</Fade>
 					))
 				}
 			</div>
