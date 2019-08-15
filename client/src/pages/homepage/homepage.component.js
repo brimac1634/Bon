@@ -1,50 +1,44 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
 
-import ParallaxRow from '../../components/parallax-row/parallax-row.component';
 import Directory from '../../components/directory/directory.component';
-import FormInput from '../../components/form-input/form-input.component';
-import CustomButton from '../../components/custom-button/custom-button.component';
+import JoinMail from '../../components/join-mail/join-mail.component';
+import Loader from '../../components/loader/loader.component';
 
-import itemTrans from '../../assets/item1-trans.png';
-import fern from '../../assets/fern.jpg';
 import needle from '../../assets/needle.png'
 import scissors from '../../assets/scissors.png'
-import frontDoor from '../../assets/front_door.jpg';
 import './homepage.styles.scss';
 
 class HomePage extends Component {
 	constructor() {
 		super();
-		this.state = { email: '' };
+		this.state = { isLoadingVideo: true };
+		this.videoRef = React.createRef();
 	}
 
-	handleSubmit = async event => {
-		event.preventDefault();
-		// const { email } = this.state;
-		//sign up for special offer
-	}
-
-	handleChange = event => {
-		const { value, name } = event.target;
-		this.setState({ [name]: value })
+	videoIsPlaying = () => {
+		this.setState({ isLoadingVideo: false })
 	}
  
 	render() {
-
+		const { isLoadingVideo } = this.state;
 		return (
 			<div className='homepage'>
-				<ParallaxRow background={`url(${fern})`} height='600px'>
-					<div className='hero-content'>
-						<Fade>
-							<img src={itemTrans} alt='bust'/>
-							<div className='title-container'>
-								<h1 className='title'>Bon Vivant</h1>
-								<h1 className='title'>Collection</h1>
-							</div>
-						</Fade>
-					</div>
-				</ParallaxRow>
+				<div className='video-container'>
+					<video 
+						ref={this.videoRef} 
+						onCanPlay={this.playVideo}
+						onPlay={this.videoIsPlaying} 
+						loop 
+						autoPlay
+						muted
+					>
+					    <source 
+					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/Bon%20Vivant.mp4?alt=media&token=f3b69e66-da99-4dd7-a119-dafcded70ca8' 
+					    	type='video/mp4' 
+					    />
+					</video>
+				</div>
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
@@ -55,9 +49,11 @@ class HomePage extends Component {
 						</Fade>
 					</div>
 				</div>
-				<div className='row'>
-					<Directory />
-				</div>
+				<Fade>
+					<div className='row'>
+							<Directory />
+					</div>
+				</Fade>
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
@@ -69,26 +65,11 @@ class HomePage extends Component {
 					</div>
 				</div>
 				<div className='row'>
-					<div className='col'>
-						<img className='front-door' src={frontDoor} alt='front door' />
-					</div>
-					<div className='col'>
-						<h1 className='center'>
-							keep up to date with special offers
-						</h1>
-						<form onSubmit={this.handleSubmit}>
-							<FormInput 
-								name='email' 
-								type='email' 
-								value={this.state.email} 
-								label='email'
-								handleChange={this.handleChange}
-								required 
-							/>
-							<CustomButton type='submit'> Sign Up </CustomButton>
-						</form>
-					</div>
+					<JoinMail />
 				</div>
+				{isLoadingVideo &&
+		          <Loader />
+		        }
 			</div>
 		)
 	}

@@ -7,7 +7,7 @@ const config = {
     authDomain: "bonv-73e16.firebaseapp.com",
     databaseURL: "https://bonv-73e16.firebaseio.com",
     projectId: "bonv-73e16",
-    storageBucket: "",
+    storageBucket: "gs://bonv-73e16.appspot.com",
     messagingSenderId: "713543407983",
     appId: "1:713543407983:web:587b3a972cea4ac0"
   }

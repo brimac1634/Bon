@@ -3,34 +3,33 @@
 	flex-direction: column;
 	align-items: center;
 
-	.hero-content {
-		height: 100%;
-		padding: 0 80px;
-		text-align: center;
+	.video-container {
+		margin-top: -140px;
+		width: 100%;
 		display: flex;
-		align-items: flex-end;
-		justify-content: space-around;
-		overflow: hidden;
+		justify-content: center;
+		align-items: center;
+		z-index: -1;
 
-		.title-container {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: center;
-
-			.title {
-				font-size: 700%;
-				color: white;
-				margin: 0;
-			}
+		video {
+			width: 100%;
 		}
-		
 
-		img {
-			max-width: 50%;
-			max-height: 90%;
-		}
+		// .title-container {
+		// 	position: absolute;
+		// 	height: 100%;
+		// 	display: flex;
+		// 	flex-direction: column;
+		// 	align-items: center;
+		// 	justify-content: center;
+
+		// 	.title {
+		// 		font-size: 700%;
+		// 		font-weight: 300;
+		// 		color: white;
+		// 		margin: 0;
+		// 	}
+		// }
 	}
 
 	.row {
