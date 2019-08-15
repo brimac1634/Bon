@@ -3,7 +3,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const path = require('path');
+const https = require('https');
 const { updateRecentMedia } = require('./firebase/firebase.utils.js');
+
+setInterval(function() {
+    https.get('https://bon-vivant.herokuapp.com/');
+}, 1000000);
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
