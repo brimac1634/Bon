@@ -36,7 +36,7 @@ class HomePage extends Component {
 			<div className='homepage'>
 				<ParallaxRow background={`url(${fern})`} height='600px'>
 					<div className='hero-content'>
-						<Fade bottom>
+						<Fade>
 							<img src={itemTrans} alt='bust'/>
 							<div className='title-container'>
 								<h1 className='title'>Bon Vivant</h1>

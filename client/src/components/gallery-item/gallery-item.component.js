@@ -9,6 +9,7 @@ const GalleryItem = ({ caption, mediaType, mediaUrl }) => {
 				className='inner-item' 
 				style={{backgroundImage: `url(${mediaUrl})`}} 
 			/>
+			<span className='caption'>{ caption }</span>
 		</div>
 	)
 }

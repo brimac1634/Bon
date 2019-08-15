@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Fade from 'react-reveal/Fade';
 
-import GalleryItem from '../../components/gallery-item/gallery-item.component';
+import GalleryContainer from '../../components/gallery-collection/gallery-collection.container';
 
 import { fetchGalleryStart } from '../../redux/gallery/gallery.actions';
-
-import './gallery.styles.scss';
-
-const mapStateToProps = state => ({
-	gallery: state.gallery.gallery
-})
 
 const mapDispatchToProps = dispatch => ({
 	fetchGalleryStart: () => dispatch(fetchGalleryStart())
@@ -23,19 +16,12 @@ class Gallery extends Component {
 	}
 
 	render() {
-		const { gallery } = this.props;
 		return (
 			<div className='gallery-page'>
-				{gallery &&
-					gallery.map(({...data}, i) => (
-						<Fade key={i}>
-							<GalleryItem {...data} />
-						</Fade>
-					))
-				}
+				<GalleryContainer />
 			</div>
 		)
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
+export default connect(null, mapDispatchToProps)(Gallery);
