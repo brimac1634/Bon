@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 const Frame = ({ currentUser, signOutStart, children }) => (
 	<div className='frame'>
 		<div className='top-bar'>
-			<span className='title'>Bon Vivant Collection</span>
+			<Link className='title' to={'/'}>Bon Vivant Collection</Link>
 			<div className='options'>
 				<Link className='option' to={'/shop'}>
 					SHOP
