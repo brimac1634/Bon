@@ -56,6 +56,7 @@ const updateRecentMedia = async (objectsToAdd) => {
 		const snapShot = await galleryRef.get()
 		await deleteCollection(firestore, 'gallery', 30)
 		addObjects(galleryRef, objectsToAdd)
+		console.log('media updated')
 	} catch (err) {
 		console.log(err)
 	}

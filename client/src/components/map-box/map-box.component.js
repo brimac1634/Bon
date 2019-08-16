@@ -22,7 +22,7 @@ class MapBox extends Component {
     		<div className='map-box'>
 				<ReactMapGL
 				    { ...viewport }
-				    mapboxApiAccessToken=''
+				    mapboxApiAccessToken='pk.eyJ1IjoiYnJpbWFjMTYzNCIsImEiOiJjanpjYzA2MDcwMmx5M2NudWp2Nnh0cDJmIn0.IlqOFRb4sMO5YGFmz4HyQg'
 				    onViewportChange={(viewport) => this.setState({viewport})}
 				>
 					<Marker 

@@ -50,10 +50,11 @@ app.post('/payment', (req, res) => {
 	})
 })
 
-const scheduleGetMedia = setTimeout(()=>{
+const scheduleGetMedia = () = setTimeout(()=>{
 	getRecentMedia();
 	scheduleGetMedia();
 }, 6000000)
+scheduleGetMedia();
 
 const getRecentMedia = () => {
 	console.log('getting recent media')

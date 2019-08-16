@@ -3,8 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import { createStructuredSelector } from 'reselect';
 
-import Header from './components/header/header.component';
-import Footer from './components/footer/footer.component';
+import Frame from './components/frame/frame.component';
 import Loader from './components/loader/loader.component';
 import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
@@ -40,33 +39,29 @@ class App extends Component {
     return (
       <div>
         {!isFetchingUser &&
-          <div>
-            <Header />
-            <div className='main'>
-              <Switch>
-                <Route exact path='/' component={HomePage}/> 
-                <Route path='/shop' component={ShopPage}/>
-                <Route path='/gallery' component={Gallery}/>
-                <Route path='/philosophy' component={Philosphy}/>
-                <Route path='/contact' component={Contact}/>
-                <Route path='/privacy-policy' component={PrivacyPolicy}/>
-                <Route exact path='/checkout' component={Checkout}/>
-                <Route 
-                  exact 
-                  path='/signin' 
-                  render={() =>
-                    this.props.currentUser ? (
-                      <Redirect to={'/'}/>
-                    ) : (
-                      <SignInAndSignUpPage />
-                    )
-                  }
-                />
-                <Redirect to='/'/>
-              </Switch>
-            </div>
-            <Footer />
-          </div>
+          <Frame>
+            <Switch>
+              <Route exact path='/' component={HomePage}/> 
+              <Route path='/shop' component={ShopPage}/>
+              <Route path='/gallery' component={Gallery}/>
+              <Route path='/philosophy' component={Philosphy}/>
+              <Route path='/contact' component={Contact}/>
+              <Route path='/privacy-policy' component={PrivacyPolicy}/>
+              <Route exact path='/checkout' component={Checkout}/>
+              <Route 
+                exact 
+                path='/signin' 
+                render={() =>
+                  this.props.currentUser ? (
+                    <Redirect to={'/'}/>
+                  ) : (
+                    <SignInAndSignUpPage />
+                  )
+                }
+              />
+              <Redirect to='/'/>
+            </Switch>
+          </Frame>
         }
         {isFetchingUser &&
           <Loader />

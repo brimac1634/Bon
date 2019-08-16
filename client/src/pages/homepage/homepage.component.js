@@ -34,7 +34,7 @@ class HomePage extends Component {
 						muted
 					>
 					    <source 
-					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/Bon%20Vivant.mp4?alt=media&token=0a99f117-5424-4632-b2a7-0f54f4cdc6b3' 
+					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/bon-vivant.mp4?alt=media&token=1288a8d4-f8bc-40fd-8f7c-8ad62eaa941a' 
 					    	type='video/mp4' 
 					    />
 					</video>
@@ -51,7 +51,7 @@ class HomePage extends Component {
 				</div>
 				<Fade>
 					<div className='row'>
-							<Directory />
+						<Directory />
 					</div>
 				</Fade>
 				<div className='row grey'>
