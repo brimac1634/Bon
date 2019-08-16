@@ -50,7 +50,7 @@ app.post('/payment', (req, res) => {
 	})
 })
 
-const scheduleGetMedia = () = setTimeout(()=>{
+const scheduleGetMedia = () => setTimeout(()=>{
 	getRecentMedia();
 	scheduleGetMedia();
 }, 6000000)
