@@ -41,12 +41,10 @@ const Frame = ({ currentUser, signOutStart, children }) => (
 					CONTACT
 				</Link>
 				{
-					currentUser ?
+					currentUser &&
 					<div className='option' onClick={signOutStart}>
 						SIGN OUT
 					</div>
-					:
-					<Link className='option' to='/signin'>SIGN IN</Link>
 				}
 				<Controller>
 					<Trigger>
@@ -68,13 +66,13 @@ const Frame = ({ currentUser, signOutStart, children }) => (
 		<div className='right-bar'>
 			<Footer />
 		</div>
-		<div className='middle'>
-			{children}
-		</div>
 		<div className='bottom-bar'>
 			<span className='scroll bob'>&#8595;</span>
 			<span className='scroll'>scroll</span>
 			<span className='scroll bob'>&#8595;</span>
+		</div>
+		<div className='middle'>
+			{children}
 		</div>
 	</div>
 )

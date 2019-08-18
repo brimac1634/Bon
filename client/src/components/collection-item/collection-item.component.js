@@ -11,10 +11,11 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const CollectionItem = ({ item, addItem }) => {
-	const { name, price, imageUrl } = item;
+	const { name, price, imageUrls } = item;
+
 	return (
 		<div className='collection-item'>
-			<div className='image' style={{backgroundImage: `url(${imageUrl}`}}/>
+			<div className='image' style={{backgroundImage: `url(${imageUrls[0]}`}}/>
 			<div className='collection-footer'>
 				<span className='name'>{ name }</span>
 				<span className='price'>{`HKD$${price}`}</span>
@@ -23,7 +24,13 @@ const CollectionItem = ({ item, addItem }) => {
 				inverted
 				onClick={()=>addItem(item)}
 			> 
-				Add to cart 
+				Add to Cart 
+			</CustomButton>
+			<CustomButton 
+				inverted
+				onClick={()=>addItem(item)}
+			> 
+				View Details 
 			</CustomButton>
 		</div>
 	)

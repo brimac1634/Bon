@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -19,8 +20,21 @@ class ContactForm extends Component {
 	handleSubmit = async event => {
 		event.preventDefault();
 		const form = this.state;
-		console.log(form)
-		// axios(form);
+		axios({
+			url: 'contact-us',
+			method: 'post',
+			data: form
+		}).then(res => {
+			console.log('response here', res)
+			// this.setState({ 
+			// 	fullName: '',
+			// 	email: '',
+			// 	subject: '',
+			// 	message: ''
+			// })
+		}).catch(err => {
+			console.log(err)
+		});
 	}
 
 	handleChange = event => {

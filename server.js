@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const path = require('path');
+const nodemailer = require('nodemailer');
 const https = require('https');
 const { updateRecentMedia } = require('./firebase/firebase.utils.js');
 
@@ -20,6 +21,8 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, 'client/build')))
@@ -48,6 +51,38 @@ app.post('/payment', (req, res) => {
 			res.status(200).send({ success: stripeRes })
 		}
 	})
+})
+
+app.post('/contact-us', (req, res) => {
+	const { fullName, email, subject, message } = req.body;
+
+	nodemailer.createTestAccount()
+		.then(({ user, pass}) => {
+			return nodemailer.createTransport({
+		        service: 'gmail',
+		        auth: {
+		            user: 'brimac1634@gmail.com',
+		            pass: 'Roxycat1634'
+		        }
+		    });
+		}).then(transporter => {
+			transporter.sendMail({
+		        from: '"Fred Foo" <foo@example.com>',
+		        to: 'bmacpherson@netroadshow.com',
+		        subject: 'Hello',
+		        text: 'Hello world?',
+		        html: '<b>Hello world?</b>'
+		    });
+		}).then(result => {
+			console.log(result)
+			res.status(200).send(result)
+		})
+		.catch(err => {
+			console.log(err)
+			res.status(500).send({ err })
+		})
+
+    
 })
 
 const scheduleGetMedia = () => setTimeout(()=>{

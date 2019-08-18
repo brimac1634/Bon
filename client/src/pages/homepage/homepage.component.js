@@ -17,6 +17,7 @@ class HomePage extends Component {
 	}
 
 	videoIsPlaying = () => {
+		console.log('calling now')
 		this.setState({ isLoadingVideo: false })
 	}
  
@@ -34,7 +35,7 @@ class HomePage extends Component {
 						muted
 					>
 					    <source 
-					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/bon-vivant.mp4?alt=media&token=1288a8d4-f8bc-40fd-8f7c-8ad62eaa941a' 
+					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/videos%2Fbon-vivant.mp4?alt=media&token=99992493-40b1-4dde-87e4-b5ee896457ac' 
 					    	type='video/mp4' 
 					    />
 					</video>
