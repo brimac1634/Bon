@@ -12,6 +12,7 @@ import ShopPage from './pages/shop/shop.component';
 import Contact from './pages/contact/contact.component';
 import PrivacyPolicy from './pages/privacy-policy/privacy-policy.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import Admin from './pages/admin/admin.component';
 import Checkout from './pages/checkout/checkout.component';
 
 import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
@@ -48,6 +49,17 @@ class App extends Component {
               <Route path='/contact' component={Contact}/>
               <Route path='/privacy-policy' component={PrivacyPolicy}/>
               <Route exact path='/checkout' component={Checkout}/>
+              <Route 
+                exact
+                path='/admin'
+                render={()=>(
+                  this.props.currentUser ? (
+                    <Admin />
+                  ) : (
+                    <Redirect to={'/'}/>
+                  )
+                )}
+              />
               <Route 
                 exact 
                 path='/signin' 

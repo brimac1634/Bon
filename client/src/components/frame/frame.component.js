@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { signOutStart } from '../../redux/user/user.actions';
 
 import CartIcon from '../cart-icon/cart-icon.component';
 import Trigger from '../dropdown/dropdown-trigger.component';
@@ -19,11 +18,7 @@ const mapStateToProps = state => ({
 	currentUser: selectCurrentUser(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-	signOutStart: () => dispatch(signOutStart())
-})
-
-const Frame = ({ currentUser, signOutStart, children }) => (
+const Frame = ({ currentUser, children }) => (
 	<div className='frame'>
 		<div className='top-bar'>
 			<Link className='title' to={'/'}>Bon Vivant Collection</Link>
@@ -42,9 +37,9 @@ const Frame = ({ currentUser, signOutStart, children }) => (
 				</Link>
 				{
 					currentUser &&
-					<div className='option' onClick={signOutStart}>
-						SIGN OUT
-					</div>
+					<Link className='option' to={'/admin'}>
+						ADMIN
+					</Link>
 				}
 				<Controller>
 					<Trigger>
@@ -77,4 +72,4 @@ const Frame = ({ currentUser, signOutStart, children }) => (
 	</div>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Frame);
+export default connect(mapStateToProps)(Frame);

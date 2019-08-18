@@ -1,17 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import CustomButton from '../custom-button/custom-button.component';
-import { addItem } from '../../redux/cart/cart.actions';
 
 import './collection-item.styles.scss';
 
-const mapDispatchToProps = dispatch => ({
-	addItem: item => dispatch(addItem(item))
-})
-
-const CollectionItem = ({ item, addItem }) => {
-	const { name, price, imageUrls } = item;
+const CollectionItem = ({ item, addItem, history, match }) => {
+	const { name, price, imageUrls, id } = item;
 
 	return (
 		<div className='collection-item'>
@@ -22,13 +17,7 @@ const CollectionItem = ({ item, addItem }) => {
 			</div>
 			<CustomButton 
 				inverted
-				onClick={()=>addItem(item)}
-			> 
-				Add to Cart 
-			</CustomButton>
-			<CustomButton 
-				inverted
-				onClick={()=>addItem(item)}
+				onClick={()=>history.push(`${match.path}#${id}`)}
 			> 
 				View Details 
 			</CustomButton>
@@ -36,4 +25,4 @@ const CollectionItem = ({ item, addItem }) => {
 	)
 }
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default withRouter(CollectionItem);
