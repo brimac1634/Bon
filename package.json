@@ -7,7 +7,7 @@
   },
   "scripts": {
     "client": "cd client/ && dotenv npm start",
-    "server": "nodemon server.js",
+    "server": "dotenv nodemon server.js",
     "build": "cd client/ && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
@@ -22,7 +22,9 @@
     "ejs": "^2.6.2",
     "express": "^4.16.4",
     "firebase-admin": "^8.3.0",
+    "knex": "^0.19.2",
     "nodemailer": "^6.3.0",
+    "pg": "^7.12.1",
     "stripe": "6.28.0"
   },
   "devDependencies": {
