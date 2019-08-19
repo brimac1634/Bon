@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
-import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
+import Directory from '../../components/directory/directory.component';
 import CollectionContainer from '../collection/collection.container';
 
 const mapDispatchToProps = dispatch => ({
@@ -24,7 +24,7 @@ class ShopPage extends Component {
 				<Route 
 					exact 
 					path={`${match.path}`} 
-					component={CollectionsOverviewContainer} 
+					component={Directory} 
 				/>
 				<Route 
 					path={`${match.path}/:collectionId`} 

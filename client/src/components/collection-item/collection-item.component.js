@@ -17,7 +17,7 @@ const CollectionItem = ({ item, addItem, history, match }) => {
 			</div>
 			<CustomButton 
 				inverted
-				onClick={()=>history.push(`${match.path}#${id}`)}
+				onClick={()=>history.push(`${match.url}/${id}`)}
 			> 
 				View Details 
 			</CustomButton>
