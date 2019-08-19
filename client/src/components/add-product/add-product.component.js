@@ -3,6 +3,9 @@ import axios from 'axios';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import Trigger from '../compound/compound-trigger.component';
+import Controller from '../compound/compound-controller.component';
+import DropList from '../dropdown/drop-list.component';
 
 import './add-product.styles.scss';
 
@@ -22,26 +25,31 @@ class AddProduct extends Component {
 	handleSubmit = async event => {
 		event.preventDefault();
 		const form = this.state;
-		axios({
-			url: 'add-product',
-			method: 'post',
-			data: form
-		}).then(res => {
-			console.log('response here', res)
-			// this.setState({ 
-			// 	fullName: '',
-			// 	email: '',
-			// 	subject: '',
-			// 	message: ''
-			// })
-		}).catch(err => {
-			console.log(err)
-		});
+		console.log(form)
+		// axios({
+		// 	url: 'add-product',
+		// 	method: 'post',
+		// 	data: form
+		// }).then(res => {
+		// 	console.log('response here', res)
+		// 	// this.setState({ 
+		// 	// 	fullName: '',
+		// 	// 	email: '',
+		// 	// 	subject: '',
+		// 	// 	message: ''
+		// 	// })
+		// }).catch(err => {
+		// 	console.log(err)
+		// });
 	}
 
 	handleChange = event => {
 		const { value, name } = event.target;
 		this.setState({ [name]: value});
+	}
+
+	categorySelect = category => {
+		this.setState({ category})
 	}
 
 	render() {
@@ -57,6 +65,7 @@ class AddProduct extends Component {
 
 		return (
 			<div className='contact-form'>
+				<h1>New Product</h1>
 				<form onSubmit={this.handleSubmit}>
 					<FormInput 
 						name='name' 
@@ -66,14 +75,20 @@ class AddProduct extends Component {
 						handleChange={this.handleChange}
 						required 
 					/>
-					<FormInput 
-						dropList
-						list={categoryList}
-						name='category'
-						value={category} 
-						label='Category'
-						handleChange={this.handleChange}
-					/>
+					<Controller>
+						<Trigger>
+							<div>
+								<FormInput 
+									value={category} 
+									label='Category'
+								/>
+							</div>
+						</Trigger>
+						<DropList
+							list={categoryList} 
+							handleSelection={this.categorySelect}
+						/>
+					</Controller>
 					<FormInput 
 						name='price' 
 						type='text' 

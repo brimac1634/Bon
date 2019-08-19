@@ -75,7 +75,7 @@ const getRecentMedia = () => {
 					return trx('gallery')
 						.returning('*')
 						.insert(mediaData)
-						.then(console.log)
+						.then(()=>console.log('media updated'))
 						.catch(console.log)
 				})
 				.then(trx.commit)

@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 import { createStructuredSelector } from 'reselect';
+import MediaQuery from 'react-responsive';
 
-import Frame from './components/frame/frame.component';
+import FrameTop from './components/frame/frame-top.component';
+import FrameLeft from './components/frame/frame-left.component';
+import FrameRight from './components/frame/frame-right.component';
+import FrameBottom from './components/frame/frame-bottom.component';
 import Loader from './components/loader/loader.component';
 import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
@@ -75,7 +79,12 @@ class App extends Component {
                 <Redirect to='/'/>
               </Switch>
             </div>
-            <Frame />
+            <FrameTop />
+            <MediaQuery minWidth={1000}>
+              <FrameLeft />
+              <FrameRight />
+              <FrameBottom />
+            </MediaQuery>
           </div>
         }
         {isFetchingUser &&

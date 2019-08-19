@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+
 import './dropdown.styles.scss';
 
-class Dropdown extends Component {
+class DropComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -35,20 +36,17 @@ class Dropdown extends Component {
 			children
 		} = this.props;
 
-		const animationState = animateOut ? 'animate-out' : 'animate-in'
+		const animationState = animateOut ? 'fade-out' : 'fade-in'
 
 		const childrenWithProps = React.Children.map(children, child => {
 	      	 return React.cloneElement(child, { toggleDropdown: toggle })      
 	    });
 
 	    const renderDropdown = () => {
-	    	const { dropList, listHeight } = this.props;
-	    	const xPosition = dropList ? x : x - contentWidth + width;
-	    	const dropWidth = dropList ? width : contentWidth;
 	    	return (
 	    		<div 
 					className={`drop-down ${animationState}`} 
-					style={{width: `${dropWidth}px`, height: `${listHeight || contentHeight}px`, top: `${y + height}px`, left: `${xPosition}px`}}
+					style={{width: `${contentWidth}px`, height: `${contentHeight}px`, top: `${y + height}px`, left: `${x - contentWidth + width}px`}}
 				>
 					<div ref={this.content}>
 						{childrenWithProps}
@@ -66,4 +64,4 @@ class Dropdown extends Component {
 	
 }
 
-export default Dropdown;
+export default DropComponent;
