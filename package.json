@@ -21,7 +21,6 @@
     "dotenv": "7.0.0",
     "ejs": "^2.6.2",
     "express": "^4.16.4",
-    "firebase-admin": "^8.3.0",
     "knex": "^0.19.2",
     "nodemailer": "^6.3.0",
     "pg": "^7.12.1",
