@@ -3,12 +3,22 @@
 
   .drop-down {
     position: absolute;
-    left: 20px;
-    top: 20px;
     display: inline-block;
     z-index: 5;
     overflow: hidden;
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+    background: white;
+
+    .item {
+      padding: 0 20px;
+      cursor: pointer;
+      height: 30px;
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        background: #d8d8d8;
+      }
+    }
 
     &.animate-in {
       opacity: 0;

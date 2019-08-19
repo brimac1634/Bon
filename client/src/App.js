@@ -40,40 +40,43 @@ class App extends Component {
     return (
       <div>
         {!isFetchingUser &&
-          <Frame>
-            <Switch>
-              <Route exact path='/' component={HomePage}/> 
-              <Route path='/shop' component={ShopPage}/>
-              <Route path='/gallery' component={Gallery}/>
-              <Route path='/philosophy' component={Philosphy}/>
-              <Route path='/contact' component={Contact}/>
-              <Route path='/privacy-policy' component={PrivacyPolicy}/>
-              <Route exact path='/checkout' component={Checkout}/>
-              <Route 
-                exact
-                path='/admin'
-                render={()=>(
-                  this.props.currentUser ? (
-                    <Admin />
-                  ) : (
-                    <Redirect to={'/'}/>
-                  )
-                )}
-              />
-              <Route 
-                exact 
-                path='/signin' 
-                render={() =>
-                  this.props.currentUser ? (
-                    <Redirect to={'/'}/>
-                  ) : (
-                    <SignInAndSignUpPage />
-                  )
-                }
-              />
-              <Redirect to='/'/>
-            </Switch>
-          </Frame>
+          <div>
+            <div className='content'>
+              <Switch>
+                <Route exact path='/' component={HomePage}/> 
+                <Route path='/shop' component={ShopPage}/>
+                <Route path='/gallery' component={Gallery}/>
+                <Route path='/philosophy' component={Philosphy}/>
+                <Route path='/contact' component={Contact}/>
+                <Route path='/privacy-policy' component={PrivacyPolicy}/>
+                <Route exact path='/checkout' component={Checkout}/>
+                <Route 
+                  exact
+                  path='/admin'
+                  render={()=>(
+                    this.props.currentUser ? (
+                      <Admin />
+                    ) : (
+                      <Redirect to={'/'}/>
+                    )
+                  )}
+                />
+                <Route 
+                  exact 
+                  path='/signin' 
+                  render={() =>
+                    this.props.currentUser ? (
+                      <Redirect to={'/'}/>
+                    ) : (
+                      <SignInAndSignUpPage />
+                    )
+                  }
+                />
+                <Redirect to='/'/>
+              </Switch>
+            </div>
+            <Frame />
+          </div>
         }
         {isFetchingUser &&
           <Loader />

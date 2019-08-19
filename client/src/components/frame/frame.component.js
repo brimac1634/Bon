@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 
 const Frame = ({ currentUser, children }) => (
 	<div className='frame'>
-		<div className='top-bar'>
+		<div className='bar top-bar'>
 			<Link className='title' to={'/'}>Bon Vivant Collection</Link>
 			<div className='options'>
 				<Link className='option' to={'/shop'}>
@@ -53,15 +53,15 @@ const Frame = ({ currentUser, children }) => (
 				</Controller>
 			</div>
 		</div>
-		<div className='left-bar'>
+		<div className='bar left-bar'>
 			<Link className='logo-container' to={'/'}>
 				<Logo className='logo' />
 			</Link>
 		</div>
-		<div className='right-bar'>
+		<div className='bar right-bar'>
 			<Footer />
 		</div>
-		<div className='bottom-bar'>
+		<div className='bar bottom-bar'>
 			<span className='scroll bob'>&#8595;</span>
 			<span className='scroll'>scroll</span>
 			<span className='scroll bob'>&#8595;</span>

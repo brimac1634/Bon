@@ -11,12 +11,11 @@ class AddProduct extends Component {
 		super(props);
 		this.state = {
 			name: '',
-			price: 0,
-			quantity: 0,
+			price: '',
+			quantity: '',
 			category: '',
 			description: '',
-			features: '',
-			message: ''
+			features: ''
 		}
 	}
 
@@ -46,42 +45,64 @@ class AddProduct extends Component {
 	}
 
 	render() {
-		const { fullName, email, subject, message } = this.state;
+		const { 
+			name, 
+			price, 
+			quantity, 
+			category, 
+			description, 
+			features
+		} = this.state;
+		const categoryList = ['shorts', 'shirts', 'trousers', 'jackets', 'accessories'];
+
 		return (
 			<div className='contact-form'>
 				<form onSubmit={this.handleSubmit}>
 					<FormInput 
-						name='fullName' 
+						name='name' 
 						type='text' 
-						value={fullName} 
-						label='Full Name'
+						value={name} 
+						label='Product Display Name'
 						handleChange={this.handleChange}
 						required 
 					/>
 					<FormInput 
-						name='email' 
-						type='email' 
-						value={email} 
-						label='Email'
+						dropList
+						list={categoryList}
+						name='category'
+						value={category} 
+						label='Category'
+						handleChange={this.handleChange}
+					/>
+					<FormInput 
+						name='price' 
+						type='text' 
+						value={price} 
+						label='Price'
+						handleChange={this.handleChange}
+					/>
+					<FormInput 
+						name='quantity' 
+						type='text' 
+						value={quantity} 
+						label='Quantity in Stock'
 						handleChange={this.handleChange}
 						required 
 					/>
 					<FormInput 
-						name='subject' 
+						name='features' 
 						type='text' 
-						value={subject} 
-						label='Subject'
+						value={features} 
+						label='Product Features'
 						handleChange={this.handleChange}
-						required 
 					/>
 					<FormInput 
 						area
-						name='message' 
+						name='description' 
 						type='text' 
-						value={message} 
-						label='Message'
+						value={description} 
+						label='Product Description'
 						handleChange={this.handleChange}
-						required 
 					/>
 					<div className='buttons'>
 						<CustomButton type='submit'> Submit </CustomButton>

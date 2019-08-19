@@ -42,10 +42,13 @@ class Dropdown extends Component {
 	    });
 
 	    const renderDropdown = () => {
+	    	const { dropList, listHeight } = this.props;
+	    	const xPosition = dropList ? x : x - contentWidth + width;
+	    	const dropWidth = dropList ? width : contentWidth;
 	    	return (
 	    		<div 
 					className={`drop-down ${animationState}`} 
-					style={{width: `${contentWidth}px`, height: `${contentHeight}px`, top: `${y + height}px`, left: `${x - contentWidth + width}px`}}
+					style={{width: `${dropWidth}px`, height: `${listHeight || contentHeight}px`, top: `${y + height}px`, left: `${xPosition}px`}}
 				>
 					<div ref={this.content}>
 						{childrenWithProps}

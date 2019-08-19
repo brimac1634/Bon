@@ -42,6 +42,12 @@ $main-color: black;
       height: 150px;
       padding: 15px 10px;
     }
+
+    &.drop-list {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
   }
 
   input[type='password'] {
