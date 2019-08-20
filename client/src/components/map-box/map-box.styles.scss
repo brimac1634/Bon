@@ -1,4 +1,10 @@
 .map-box {
+	width: 100%;
+	max-width: 450px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	.tick-container {
 		width: 30px;

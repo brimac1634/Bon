@@ -8,6 +8,7 @@ import FrameTop from './components/frame/frame-top.component';
 import FrameLeft from './components/frame/frame-left.component';
 import FrameRight from './components/frame/frame-right.component';
 import FrameBottom from './components/frame/frame-bottom.component';
+import SlideMenu from './components/slide-menu/slide-menu.component';
 import Loader from './components/loader/loader.component';
 import HomePage from './pages/homepage/homepage.component';
 import Gallery from './pages/gallery/gallery.component';
@@ -84,6 +85,9 @@ class App extends Component {
               <FrameLeft />
               <FrameRight />
               <FrameBottom />
+            </MediaQuery>
+            <MediaQuery maxWidth={729}>
+              <SlideMenu />
             </MediaQuery>
           </div>
         }

@@ -4,9 +4,9 @@ import { ReactComponent as InstaIcon } from '../../assets/instagram.svg'
 import { ReactComponent as FacebookIcon } from '../../assets/facebook.svg'
 import { ReactComponent as EmailIcon } from '../../assets/email.svg'
 
-const Footer = () => (
+const Footer = ({ horizontal }) => (
 	<div className='footer'>
-		<div className='icon-set'>
+		<div className={`icon-set ${horizontal ? 'horizontal' : 'vertical'}`}>
 			<a 
 				className='icon'
 				href='https://www.instagram.com/bonvivantcollection/' 

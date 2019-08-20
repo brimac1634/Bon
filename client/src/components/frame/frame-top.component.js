@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive'; 
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { toggleMenu } from '../../redux/menu/menu.actions';
 
 import CartIcon from '../cart-icon/cart-icon.component';
 import Trigger from '../compound/compound-trigger.component';
@@ -17,7 +18,11 @@ const mapStateToProps = state => ({
 	currentUser: selectCurrentUser(state)
 })
 
-const FrameTop = ({ currentUser }) => (
+const mapDispatchToProps = dispatch => ({
+	toggleMenu: () => dispatch(toggleMenu())
+})
+
+const FrameTop = ({ currentUser, toggleMenu }) => (
 	<div className='bar top-bar'>
 		<Link className='title' to={'/'}>Bon Vivant Collection</Link>
 		<div className='options'>
@@ -40,22 +45,22 @@ const FrameTop = ({ currentUser }) => (
 						ADMIN
 					</Link>
 				}
+				<Controller>
+					<Trigger>
+						<div>
+							<CartIcon />
+						</div>
+					</Trigger>
+					<DropComponent>
+						<CartDropdown />
+					</DropComponent>
+				</Controller>
 			</MediaQuery>
-			<Controller>
-				<Trigger>
-					<div>
-						<CartIcon />
-					</div>
-				</Trigger>
-				<DropComponent>
-					<CartDropdown />
-				</DropComponent>
-			</Controller>
-			<MediaQuery minWidth={730}>
-				<div className='hamburger' onClick={} />
+			<MediaQuery maxWidth={730}>
+				<div className='option hamburger' onClick={toggleMenu} />
 			</MediaQuery>
 		</div>
 	</div>
 )
 
-export default connect(mapStateToProps)(FrameTop);
+export default connect(mapStateToProps, mapDispatchToProps)(FrameTop);
