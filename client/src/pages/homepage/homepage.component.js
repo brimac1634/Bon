@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
+import { isMobileOnly } from 'react-device-detect';
 
 import Directory from '../../components/directory/directory.component';
 import JoinMail from '../../components/join-mail/join-mail.component';
@@ -17,7 +18,6 @@ class HomePage extends Component {
 	}
 
 	videoIsPlaying = () => {
-		console.log('calling now')
 		this.setState({ isLoadingVideo: false })
 	}
  
@@ -26,27 +26,29 @@ class HomePage extends Component {
 		return (
 			<div className='homepage'>
 				<div className='video-container'>
-					<video 
-						ref={this.videoRef} 
-						onCanPlay={this.playVideo}
-						onPlay={this.videoIsPlaying} 
-						loop 
-						autoPlay
-						muted
-					>
-					    <source 
-					    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/videos%2Fbon-vivant.mp4?alt=media&token=99992493-40b1-4dde-87e4-b5ee896457ac' 
-					    	type='video/mp4' 
-					    />
-					</video>
+					{
+						!isMobileOnly &&
+						<video 
+							ref={this.videoRef}
+							onPlay={this.videoIsPlaying} 
+							loop 
+							autoPlay
+							muted
+						>
+						    <source 
+						    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/videos%2Fbon-vivant.mp4?alt=media&token=99992493-40b1-4dde-87e4-b5ee896457ac' 
+						    	type='video/mp4' 
+						    />
+						</video>
+					}
 				</div>
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
 							<img className='illustration' src={needle} alt='needle' />
-							<h1 className='center with-border'>
+							<h2 className='text center'>
 								Men's Haberdashery specialising in handmade tailored clothing for those who live well.
-							</h1>
+							</h2>
 						</Fade>
 					</div>
 				</div>
@@ -54,20 +56,22 @@ class HomePage extends Component {
 					<div className='row'>
 						<Directory />
 					</div>
-				</Fade>
+				</Fade>	
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
 							<img className='scissors' src={scissors} alt='needle' />
-							<p className='text center with-border'>
+							<p className='text center'>
 								Bon Vivant is an idea of appreciation - that there exists an intrinsic value to things that give joy in life. These works consist of ideas and memories that bear a connection to the past. What was before considered dated has been transmuted by the mere passing of years to a status at once modern and prevalent.
 							</p>
 						</Fade>
 					</div>
 				</div>
-				<div className='row'>
-					<JoinMail />
-				</div>
+				<Fade>
+					<div className='row'>
+						<JoinMail />
+					</div>
+				</Fade>
 				{isLoadingVideo &&
 		          <Loader />
 		        }

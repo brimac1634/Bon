@@ -83,7 +83,9 @@ const SlideMenu = ({ currentUser, history, toggleMenu, menuIsOpen }) => {
 					</div>
 				}
 			</div>
-			<Footer horizontal />
+			<div className='footer-container'>
+				<Footer horizontal />
+			</div>
 		</div>
 	)
 }
