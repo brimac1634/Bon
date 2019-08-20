@@ -17,6 +17,10 @@ class HomePage extends Component {
 		this.videoRef = React.createRef();
 	}
 
+	componentDidMount() {
+		if (isMobileOnly) this.setState({isLoadingVideo: false})
+	}
+
 	videoIsPlaying = () => {
 		this.setState({ isLoadingVideo: false })
 	}

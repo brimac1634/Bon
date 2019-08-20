@@ -18,38 +18,47 @@ class AddProduct extends Component {
 			quantity: '',
 			category: '',
 			description: '',
-			features: ''
+			features: '',
+			images: null
 		}
 	}
 
 	handleSubmit = async event => {
 		event.preventDefault();
 		const form = this.state;
-		console.log(form)
-		// axios({
-		// 	url: 'add-product',
-		// 	method: 'post',
-		// 	data: form
-		// }).then(res => {
-		// 	console.log('response here', res)
-		// 	// this.setState({ 
-		// 	// 	fullName: '',
-		// 	// 	email: '',
-		// 	// 	subject: '',
-		// 	// 	message: ''
-		// 	// })
-		// }).catch(err => {
-		// 	console.log(err)
-		// });
+		let formData = new FormData();
+		form.images.forEach(image => formData.append(image.name, image))
+		formData.append('form', form)
+		axios.post('update-collection', form)
+			.then(res => {
+				console.log('response here', res)
+				// this.setState({ 
+				// 	fullName: '',
+				// 	email: '',
+				// 	subject: '',
+				// 	message: ''
+				// })
+			}).catch(err => {
+				console.log(err)
+			});
 	}
 
-	handleChange = event => {
-		const { value, name } = event.target;
+	handleChange = e => {
+		const { value, name } = e.target;
 		this.setState({ [name]: value});
 	}
 
 	categorySelect = category => {
-		this.setState({ category})
+		this.setState({ category })
+	}
+
+	handleChangeFile = e => {
+		const files = e.target.files;
+		let fileArray = [];
+		for (let i = 0; i < files.length; i++) {
+			fileArray.push(files[i])
+		}
+		this.setState({ images: fileArray })
 	}
 
 	render() {
@@ -118,6 +127,13 @@ class AddProduct extends Component {
 						value={description} 
 						label='Product Description'
 						handleChange={this.handleChange}
+					/>
+					<input 
+						type='file' 
+						accept='image/*'
+						multiple='multiple' 
+						name='image' 
+						onChange={this.handleChangeFile} 
 					/>
 					<div className='buttons'>
 						<CustomButton type='submit'> Submit </CustomButton>

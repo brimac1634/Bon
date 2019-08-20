@@ -31,6 +31,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const gallery = require('./controllers/gallery');
+const collection = require('./controllers/collection');
+
 const scheduleGetMedia = () => setTimeout(()=>{
 	gallery.getRecentMedia();
 	scheduleGetMedia();
@@ -43,6 +45,8 @@ app.listen(port, error => {
 })
 
 app.get('/get-gallery', (req, res) => { gallery.getGallery(res)})
+
+app.post('/update-collection', (req, res) => { collection.updateCollection(req, res)})
 
 app.post('/payment', (req, res) => {
 	const { token, amount } = req.body;
