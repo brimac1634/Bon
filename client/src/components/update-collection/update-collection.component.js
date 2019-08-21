@@ -13,6 +13,7 @@ class AddProduct extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			productID: '',
 			name: '',
 			price: '',
 			quantity: '',
@@ -30,6 +31,7 @@ class AddProduct extends Component {
 		Object.keys(form).forEach(key => {
 			if (key !== 'images') formData.append(key, form[key])
 		})
+		// productID
 		form.images.forEach(image => formData.append('images', image))
 		axios({
 			url: 'update-collection',
@@ -59,12 +61,20 @@ class AddProduct extends Component {
 	}
 
 	handleChangeFile = e => {
+		let { images } = this.state;
 		const files = e.target.files;
 		let fileArray = [];
 		for (let i = 0; i < files.length; i++) {
 			fileArray.push(files[i])
 		}
-		this.setState({ images: fileArray })
+		images = images ? images.concat(fileArray) : fileArray
+		this.setState({ images })
+	}
+
+	removeImage = index => {
+		const { images } = this.state;
+		images.splice(index, 1);
+		this.setState({ images })
 	}
 
 	render() {
@@ -74,74 +84,106 @@ class AddProduct extends Component {
 			quantity, 
 			category, 
 			description, 
-			features
+			features,
+			images
 		} = this.state;
 		const categoryList = ['shorts', 'shirts', 'trousers', 'jackets', 'accessories'];
 
 		return (
-			<div className='contact-form'>
-				<h1>New Product</h1>
+			<div className='update-collection'>
 				<form onSubmit={this.handleSubmit}>
-					<FormInput 
-						name='name' 
-						type='text' 
-						value={name} 
-						label='Product Display Name'
-						handleChange={this.handleChange}
-						required 
-					/>
-					<Controller>
-						<Trigger>
-							<div>
-								<FormInput 
-									disabled
-									value={category} 
-									label='Category'
+					<div className='panels'>
+						<div className='panel'>
+							<FormInput 
+								name='name' 
+								type='text' 
+								value={name} 
+								label='Product Display Name'
+								handleChange={this.handleChange}
+								required 
+							/>
+							<Controller>
+								<Trigger>
+									<div>
+										<FormInput 
+											disabled
+											value={category} 
+											label='Category'
+										/>
+									</div>
+								</Trigger>
+								<DropList
+									list={categoryList} 
+									handleSelection={this.categorySelect}
 								/>
+							</Controller>
+							<FormInput 
+								name='price' 
+								type='text' 
+								value={price} 
+								label='Price'
+								handleChange={this.handleChange}
+							/>
+							<FormInput 
+								name='quantity' 
+								type='text' 
+								value={quantity} 
+								label='Quantity in Stock'
+								handleChange={this.handleChange}
+								required 
+							/>
+							<FormInput 
+								name='features' 
+								type='text' 
+								value={features} 
+								label='Product Features'
+								handleChange={this.handleChange}
+							/>
+							<FormInput 
+								area
+								name='description' 
+								type='text' 
+								value={description} 
+								label='Product Description'
+								handleChange={this.handleChange}
+							/>
+						</div>
+						<div className='panel image-panel'>
+							<span className='image-header'>
+								Add or Remove Images
+							</span>
+							<input 
+								className='input-file'
+								type='file' 
+								accept='image/png, image/jpeg'
+								multiple='multiple' 
+								name='image'
+								id='upload' 
+								onChange={this.handleChangeFile} 
+							/>
+							<label for='upload'>Choose Images</label>
+							<div className='image-collection'>
+								{
+									images &&
+									images.map((image, i) => (
+										<div className='image' key={i}>
+											<img 
+												src={URL.createObjectURL(image)}
+												alt={image.name}
+											/>
+											<span className='img-label'>{image.name}</span>
+											<div 
+												className='x'
+												onClick={()=>this.removeImage(i)}
+											>
+												<span>&#10005;</span>
+											</div>
+										</div>
+									))
+								}
 							</div>
-						</Trigger>
-						<DropList
-							list={categoryList} 
-							handleSelection={this.categorySelect}
-						/>
-					</Controller>
-					<FormInput 
-						name='price' 
-						type='text' 
-						value={price} 
-						label='Price'
-						handleChange={this.handleChange}
-					/>
-					<FormInput 
-						name='quantity' 
-						type='text' 
-						value={quantity} 
-						label='Quantity in Stock'
-						handleChange={this.handleChange}
-						required 
-					/>
-					<FormInput 
-						name='features' 
-						type='text' 
-						value={features} 
-						label='Product Features'
-						handleChange={this.handleChange}
-					/>
-					<FormInput 
-						area
-						name='description' 
-						type='text' 
-						value={description} 
-						label='Product Description'
-						handleChange={this.handleChange}
-					/>
-					<input 
-						type='file' 
-						accept='image/*'
-						multiple='multiple' 
-						name='image' 
-						onChange={this.handleChangeFile} 
-					/>
+						</div>
+					</div>
 					<div className='buttons'>
 						<CustomButton type='submit'> Submit </CustomButton>
 					</div>

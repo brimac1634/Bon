@@ -42,6 +42,7 @@ class App extends Component {
 
   render() {
     const { isFetchingUser } = this.props;
+    
     return (
       <div>
         {!isFetchingUser &&
