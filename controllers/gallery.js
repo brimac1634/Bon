@@ -1,31 +1,17 @@
-const knex = require('knex');
 const axios = require('axios');
 
-const db = (process.env.PORT == 5000)
-	? knex({
-      client: 'pg',
-      connection: {
-        host : '127.0.0.1',
-        user : 'brianmacpherson',
-        password : '',
-        database : 'bon'
-      }
-    })
-    : knex({
-      client: 'pg',
-      connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-      }
-    })
-
-const getGallery = (res) => {
+const getGallery = (res, db) => {
 	db.select('*').from('gallery')
 		.orderBy('timestamp', 'desc')
 		.then(gallery => res.status(200).send(gallery))
 		.catch(res.status(500))
 }
 
+const scheduleGetMedia = () => setTimeout(()=>{
+	getRecentMedia();
+	scheduleGetMedia();
+}, 6000000)
+scheduleGetMedia();
 
 const getRecentMedia = () => {
 	console.log('getting recent media')

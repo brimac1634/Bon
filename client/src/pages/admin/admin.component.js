@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AddProduct from '../../components/add-product/add-product.component';
+import UpdateCollection from '../../components/update-collection/update-collection.component';
 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
@@ -20,7 +20,7 @@ class Admin extends Component {
 	render() {
 		return (
 			<div className='admin'>
-				<AddProduct />
+				<UpdateCollection />
 			</div>
 		)
 	}

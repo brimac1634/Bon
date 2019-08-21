@@ -40,7 +40,7 @@ class HomePage extends Component {
 							muted
 						>
 						    <source 
-						    	src='https://firebasestorage.googleapis.com/v0/b/bonv-73e16.appspot.com/o/videos%2Fbon-vivant.mp4?alt=media&token=99992493-40b1-4dde-87e4-b5ee896457ac' 
+						    	src='https://bon-vivant-videos.s3-ap-southeast-1.amazonaws.com/bon-vivant.mp4' 
 						    	type='video/mp4' 
 						    />
 						</video>

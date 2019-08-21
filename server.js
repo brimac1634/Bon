@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const https = require('https');
+const knex = require('knex');
 
 setInterval(function() {
     https.get('https://bon-vivant.herokuapp.com/');
@@ -11,7 +12,23 @@ setInterval(function() {
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const db = (process.env.PORT == 5000)
+	? knex({
+      client: 'pg',
+      connection: {
+        host : '127.0.0.1',
+        user : 'brianmacpherson',
+        password : '',
+        database : 'bon'
+      }
+    })
+    : knex({
+      client: 'pg',
+      connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+      }
+	})
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,69 +49,22 @@ if (process.env.NODE_ENV === 'production') {
 
 const gallery = require('./controllers/gallery');
 const collection = require('./controllers/collection');
-
-const scheduleGetMedia = () => setTimeout(()=>{
-	gallery.getRecentMedia();
-	scheduleGetMedia();
-}, 6000000)
-scheduleGetMedia();
+const payment = require('./controllers/payment');
+const contact = require('./controllers/contact');
 
 app.listen(port, error => {
 	if (error) throw error;
 	console.log('server running on port ' + port)
 })
 
-app.get('/get-gallery', (req, res) => { gallery.getGallery(res)})
+app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 
-app.post('/update-collection', (req, res) => { collection.updateCollection(req, res)})
-
-app.post('/payment', (req, res) => {
-	const { token, amount } = req.body;
-	const body = {
-		source: token.id,
-		amount: amount,
-		currency: 'hkd'
-	};
-	stripe.charges.create(body, (stripeErr, stripeRes) =>{
-		if (stripeErr) {
-			res.status(500).send({ error: stripeErr })
-		} else {
-			res.status(200).send({ success: stripeRes })
-		}
-	})
+app.post('/update-collection', collection.uploadImages(), (req, res) => { collection.updateCollectionImages(req, res, db)
 })
 
-app.post('/contact-us', (req, res) => {
-	const { fullName, email, subject, message } = req.body;
+app.post('/payment', (req, res) => { payment.handlePayment(req, res) })
 
-	nodemailer.createTestAccount()
-		.then(({ user, pass}) => {
-			return nodemailer.createTransport({
-		        service: 'gmail',
-		        auth: {
-		            user: 'brimac1634@gmail.com',
-		            pass: 'Roxycat1634'
-		        }
-		    });
-		}).then(transporter => {
-			transporter.sendMail({
-		        from: '"Fred Foo" <foo@example.com>',
-		        to: 'bmacpherson@netroadshow.com',
-		        subject: 'Hello',
-		        text: 'Hello world?',
-		        html: '<b>Hello world?</b>'
-		    });
-		}).then(result => {
-			console.log(result)
-			res.status(200).send(result)
-		})
-		.catch(err => {
-			console.log(err)
-			res.status(500).send({ err })
-		})
-
-    
-})
+app.post('/contact-us', (req, res) => { contact.handleContact(req, res) })
 
 
 

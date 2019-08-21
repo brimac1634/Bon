@@ -7,7 +7,7 @@ import Trigger from '../compound/compound-trigger.component';
 import Controller from '../compound/compound-controller.component';
 import DropList from '../dropdown/drop-list.component';
 
-import './add-product.styles.scss';
+import './update-collection.styles.scss';
 
 class AddProduct extends Component {
 	constructor(props) {
@@ -27,20 +27,26 @@ class AddProduct extends Component {
 		event.preventDefault();
 		const form = this.state;
 		let formData = new FormData();
-		form.images.forEach(image => formData.append(image.name, image))
-		formData.append('form', form)
-		axios.post('update-collection', form)
-			.then(res => {
-				console.log('response here', res)
-				// this.setState({ 
-				// 	fullName: '',
-				// 	email: '',
-				// 	subject: '',
-				// 	message: ''
-				// })
-			}).catch(err => {
-				console.log(err)
-			});
+		Object.keys(form).forEach(key => {
+			if (key !== 'images') formData.append(key, form[key])
+		})
+		form.images.forEach(image => formData.append('images', image))
+		axios({
+			url: 'update-collection',
+			method: 'POST',
+			headers: { 'content-type': 'multipart/form-data' },
+			data: formData
+		}).then(res => {
+			console.log('response here', res)
+			// this.setState({ 
+			// 	fullName: '',
+			// 	email: '',
+			// 	subject: '',
+			// 	message: ''
+			// })
+		}).catch(err => {
+			console.log(err)
+		});
 	}
 
 	handleChange = e => {
@@ -88,6 +94,7 @@ class AddProduct extends Component {
 						<Trigger>
 							<div>
 								<FormInput 
+									disabled
 									value={category} 
 									label='Category'
 								/>
