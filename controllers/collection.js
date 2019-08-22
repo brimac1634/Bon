@@ -7,44 +7,60 @@ const s3 = new AWS.S3();
 const storage = multerS3({
     s3,
     bucket: 'bon-vivant-images',
-    metadata: function (req, file, cb) {
-        cb(null, {productID: req.body.productID});
-    },
     key: function (req, file, cb) {
-    	const fileType = file.mimetype.split('/')[1];
-        cb(null, `${req.body.productID}_${new Date().toISOString()}.${fileType}`)
+    	const { originalname } = file;
+    	const nameSplit = originalname.split('.')
+    	const name = nameSplit[0];
+    	const fileType = nameSplit[1];
+        cb(null, `${originalname}_${new Date().toISOString()}.${fileType}`)
     }
 })
 
-const fileFilter = (req, file, cb) => {
-	if (file.mimtype === 'image/jpeg' || file.mimtype === 'image/png') {
-		cb(null, true);
-	} else {
-		cb(null, false);
-	}
-}
-
-const upload = multer({
-  storage,
-  fileFilter
-})
+const upload = multer({ storage })
 
 const uploadImages = () => upload.array('images')
 
+const updateCollection = (req, res, db) => {
+	const { productID, name, price, quantity, category, description, features } = req.body;
+	if (productID) {
+		//editing collection item
+	} else {
+		//new item
+		db('collection')
+			.returning('*')
+			.insert({ 
+				name, 
+				price,
+				quantity, 
+				category, 
+				description, 
+				features,
+				timestamp: new Date() 
+			})
+			.then(item => res.send(item))
+			.catch(err => {
+				console.log(err)
+				res.status(500).send('unable to add item')
+			})
+	}
+}
+
 const updateCollectionImages = (req, res, db) => {
+	const productID = req.body;
 	const date = new Date();
-	const images = req.files.map(({ metadata, location }) => {
+	const images = req.files.map(({ location }) => {
 		return { 
-			product_id: metadata.productID, 
+			product_id: productID, 
 			media_url: location, 
 			timestamp: date
 		}
 	})
-	db.select('*').from('images')
+	db('images')
+		.returning('*')
 		.insert(images)
 		.then(images => {
 			console.log('images uploaded', images)
-			res.status(200)
+			res.send(images)
 		})
 		.catch(err => {
 			console.log(err)
@@ -56,6 +72,7 @@ const updateCollectionImages = (req, res, db) => {
 
 
 module.exports = {
+	updateCollection,
 	uploadImages,
 	updateCollectionImages
 }

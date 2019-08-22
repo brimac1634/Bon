@@ -27,19 +27,27 @@ class AddProduct extends Component {
 	handleSubmit = async event => {
 		event.preventDefault();
 		const form = this.state;
+		axios.post('update-collection', form)
+			.then(({ data }) => {
+				if (form.images) this.uploadImages(data[0].id)
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	}
+
+	uploadImages = async productID => {
+		const { images } = this.state;
 		let formData = new FormData();
-		Object.keys(form).forEach(key => {
-			if (key !== 'images') formData.append(key, form[key])
-		})
-		// productID
-		form.images.forEach(image => formData.append('images', image))
+		images.forEach(image => formData.append('images', image))
+		formData.append('productID', productID)
 		axios({
-			url: 'update-collection',
+			url: 'update-collection-images',
 			method: 'POST',
 			headers: { 'content-type': 'multipart/form-data' },
 			data: formData
-		}).then(res => {
-			console.log('response here', res)
+		}).then(({ data }) => {
+			console.log('response here', data)
 			// this.setState({ 
 			// 	fullName: '',
 			// 	email: '',
@@ -161,7 +169,7 @@ class AddProduct extends Component {
 								id='upload' 
 								onChange={this.handleChangeFile} 
 							/>
-							<label for='upload'>Choose Images</label>
+							<label htmlFor='upload'>Choose Images</label>
 							<div className='image-collection'>
 								{
 									images &&
