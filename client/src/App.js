@@ -21,13 +21,16 @@ import Admin from './pages/admin/admin.component';
 import Checkout from './pages/checkout/checkout.component';
 
 import { selectCurrentUser, selectIsUserFetching } from './redux/user/user.selectors';
+import { selectIsLoading, selectLoadingMessage } from './redux/loading/loading.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 import './App.css';
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  isFetchingUser: selectIsUserFetching
+  isFetchingUser: selectIsUserFetching,
+  isLoading: selectIsLoading,
+  loadingMessage: selectLoadingMessage
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -41,7 +44,7 @@ class App extends Component {
   }
 
   render() {
-    const { isFetchingUser } = this.props;
+    const { isFetchingUser, isLoading, loadingMessage } = this.props;
     
     return (
       <div>
@@ -80,6 +83,9 @@ class App extends Component {
                 />
                 <Redirect to='/'/>
               </Switch>
+              {isLoading &&
+                <Loader message={loadingMessage} />
+              }
             </div>
             <FrameTop />
             <MediaQuery minWidth={1000}>
