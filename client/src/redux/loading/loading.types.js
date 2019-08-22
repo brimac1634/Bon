@@ -1,5 +1,6 @@
 const LoadingActionTypes = {
-	TOGGLE_LOADING: 'TOGGLE_LOADING'
+	START_LOADING: 'START_LOADING',
+	STOP_LOADING: 'STOP_LOADING'
 }
 
 export default LoadingActionTypes;

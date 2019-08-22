@@ -59,6 +59,7 @@ app.listen(port, error => {
 
 app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 
+app.get('/get-collection', (req, res) => { collection.getCollection(res, db) })
  
 app.post('/update-collection-images', collection.uploadImages(), (req, res) => { collection.updateCollectionImages(req, res, db)
 })

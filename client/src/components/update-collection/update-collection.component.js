@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
+
+import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -8,6 +11,11 @@ import Controller from '../compound/compound-controller.component';
 import DropList from '../dropdown/drop-list.component';
 
 import './update-collection.styles.scss';
+
+const mapDispatchToProps = dispatch => ({
+	startLoading: message => dispatch(startLoading(message)),
+	stopLoading: () => dispatch(stopLoading())
+})
 
 class AddProduct extends Component {
 	constructor(props) {
@@ -26,10 +34,16 @@ class AddProduct extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
+		const { startLoading, stopLoading } = this.props;
+		startLoading('Updating Collection...')
 		const form = this.state;
 		axios.post('update-collection', form)
 			.then(({ data }) => {
-				if (form.images) this.uploadImages(data[0].id)
+				if (form.images) {
+					this.uploadImages(data[0].id)
+				} else {
+					stopLoading()
+				}
 			})
 			.catch(err => {
 				console.log(err)
@@ -37,6 +51,8 @@ class AddProduct extends Component {
 	}
 
 	uploadImages = async productID => {
+		const { startLoading, stopLoading } = this.props;
+		startLoading('Uploading Images...')
 		const { images } = this.state;
 		let formData = new FormData();
 		images.forEach(image => formData.append('images', image))
@@ -47,15 +63,21 @@ class AddProduct extends Component {
 			headers: { 'content-type': 'multipart/form-data' },
 			data: formData
 		}).then(({ data }) => {
+			stopLoading()
 			console.log('response here', data)
-			// this.setState({ 
-			// 	fullName: '',
-			// 	email: '',
-			// 	subject: '',
-			// 	message: ''
-			// })
+			this.setState({ 
+				productID: '',
+				name: '',
+				price: '',
+				quantity: '',
+				category: '',
+				description: '',
+				features: '',
+				images: null
+			})
 		}).catch(err => {
 			console.log(err)
+			stopLoading()
 		});
 	}
 
@@ -201,4 +223,4 @@ class AddProduct extends Component {
 	}
 }
 
-export default AddProduct;
+export default connect(null, mapDispatchToProps)(AddProduct);

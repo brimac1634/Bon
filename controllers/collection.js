@@ -1,3 +1,4 @@
+
 const multer = require('multer');
 const multerS3 = require('multer-s3')
 const AWS = require('aws-sdk');
@@ -8,11 +9,10 @@ const storage = multerS3({
     s3,
     bucket: 'bon-vivant-images',
     key: function (req, file, cb) {
-    	const { originalname } = file;
-    	const nameSplit = originalname.split('.')
+    	const nameSplit = file.originalname.split('.')
     	const name = nameSplit[0];
     	const fileType = nameSplit[1];
-        cb(null, `${originalname}_${new Date().toISOString()}.${fileType}`)
+        cb(null, `${name}_${new Date().toISOString()}.${fileType}`)
     }
 })
 
@@ -46,7 +46,7 @@ const updateCollection = (req, res, db) => {
 }
 
 const updateCollectionImages = (req, res, db) => {
-	const productID = req.body;
+	const { productID } = req.body;
 	const date = new Date();
 	const images = req.files.map(({ location }) => {
 		return { 
@@ -69,9 +69,20 @@ const updateCollectionImages = (req, res, db) => {
 
 }
 
+const getCollection = (res, db) => {
+	db.select('*').from('collection')
+		.orderBy('timestamp', 'desc')
+		.then(collection => res.send(collection))
+		.catch(err => {
+			console.log(err)
+			res.status(500)
+		})
+}
+
 
 
 module.exports = {
+	getCollection,
 	updateCollection,
 	uploadImages,
 	updateCollectionImages
