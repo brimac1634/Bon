@@ -10,10 +10,9 @@ import ShopActionTypes from './shop.types';
 
 export function* fetchCollectionsAsync() {
 	try {
-		const { data } = yield axios.get('get-collection');
+		const { data } = yield axios.get('/get-collection');
 		yield put(fetchCollectionsSuccess(data));
 	} catch (err) {
-		console.log(err)
 		yield put(fetchCollectionsFailure(err.message))
 	}
 }

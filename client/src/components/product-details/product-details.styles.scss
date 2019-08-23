@@ -1,0 +1,33 @@
+.product-details {
+	width: 100%;
+	height: auto;
+	padding: 40px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	@media screen and (max-width: 450px) {
+	    margin: 20px;
+	}
+
+	.panels {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+
+		.panel {
+			max-width: 450px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			.price {
+				color: grey;
+				font-size: 150%;
+			}
+		}
+	}
+
+	
+}

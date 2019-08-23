@@ -149,14 +149,14 @@ class AddProduct extends Component {
 							</Controller>
 							<FormInput 
 								name='price' 
-								type='text' 
+								type='number' 
 								value={price} 
 								label='Price (HKD)'
 								handleChange={this.handleChange}
 							/>
 							<FormInput 
 								name='quantity' 
-								type='text' 
+								type='number' 
 								value={quantity} 
 								label='Quantity in Stock'
 								handleChange={this.handleChange}
