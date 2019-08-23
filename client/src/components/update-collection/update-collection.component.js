@@ -27,7 +27,8 @@ class AddProduct extends Component {
 			quantity: '',
 			category: '',
 			description: '',
-			features: '',
+			featuresField: '',
+			features: null,
 			images: null
 		}
 	}
@@ -72,7 +73,7 @@ class AddProduct extends Component {
 				quantity: '',
 				category: '',
 				description: '',
-				features: '',
+				features: null,
 				images: null
 			})
 		}).catch(err => {
@@ -85,6 +86,17 @@ class AddProduct extends Component {
 		const { value, name } = e.target;
 		this.setState({ [name]: value});
 	}
+
+	handleAddFeatures = e => {
+		if (e.which === 13) {
+			e.preventDefault();
+			const { value } = e.target;
+			let { features } = this.state;
+			features = features ? [...features, value] : [value]
+			this.setState({ features, featuresField: '' })
+		}
+	}
+
 
 	categorySelect = category => {
 		this.setState({ category })
@@ -101,10 +113,10 @@ class AddProduct extends Component {
 		this.setState({ images })
 	}
 
-	removeImage = index => {
-		const { images } = this.state;
-		images.splice(index, 1);
-		this.setState({ images })
+	removeFromArray = (list, index) => {
+		let array  = this.state[list];
+		array.splice(index, 1);
+		this.setState({ [list]: array })
 	}
 
 	render() {
@@ -114,6 +126,7 @@ class AddProduct extends Component {
 			quantity, 
 			category, 
 			description, 
+			featuresField,
 			features,
 			images
 		} = this.state;
@@ -163,12 +176,32 @@ class AddProduct extends Component {
 								required 
 							/>
 							<FormInput 
-								name='features' 
+								name='featuresField' 
 								type='text' 
-								value={features} 
-								label='Product Features'
+								value={featuresField} 
+								label='Add Product Features'
 								handleChange={this.handleChange}
+								onKeyPress={this.handleAddFeatures}
 							/>
+							{
+								features &&
+								<div>
+									<span className='feature-label'>Features:</span>
+									<div className='features'>
+										{
+											features.map((feature, i) => (
+												<div 
+													className='feature' 
+													key={i}
+													onClick={()=>this.removeFromArray('features', i)}
+												>
+														{feature} &#10005;
+												</div>
+											))
+										}
+									</div>
+								</div>
+							}
 							<FormInput 
 								area
 								name='description' 
@@ -204,7 +237,7 @@ class AddProduct extends Component {
 											<span className='img-label'>{image.name}</span>
 											<div 
 												className='x'
-												onClick={()=>this.removeImage(i)}
+												onClick={()=>this.removeFromArray('images', i)}
 											>
 												<span>&#10005;</span>
 											</div>

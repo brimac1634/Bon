@@ -22,6 +22,9 @@ const uploadImages = () => upload.array('images')
 
 const updateCollection = (req, res, db) => {
 	const { productID, name, price, quantity, category, description, features } = req.body;
+	const featuresString = features 
+		? features.join(';')
+		: ''
 	if (productID) {
 		//editing collection item
 	} else {
@@ -34,7 +37,7 @@ const updateCollection = (req, res, db) => {
 				quantity, 
 				category, 
 				description, 
-				features,
+				features: featuresString,
 				timestamp: new Date() 
 			})
 			.then(item => res.send(item))
@@ -78,7 +81,11 @@ const getCollection = (res, db) => {
 					.orderBy('timestamp', 'desc')
 					.then(mediaURLs => {
 						const images = mediaURLs.map(url => url.media_url)
-						return {...product, images}
+						return {
+							...product, 
+							features: product.features.split(';'),
+							images
+						}
 					})
 					.catch(console.log)
 			})

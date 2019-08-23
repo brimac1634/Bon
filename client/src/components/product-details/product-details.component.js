@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 
 class ProductDetails extends Component {
 	state = {
-		currentImage: null,
+		currentImage: this.props.product.images[0],
 		quantity: 1
 	}
 
@@ -43,7 +43,7 @@ class ProductDetails extends Component {
 					<div className='panel'>
 						<div 
 							className='main-image' 
-							background={`url(${currentImage})`} 
+							style={{backgroundImage: `url(${currentImage})`}} 
 						/>
 						<div className='image-list'>
 							{
@@ -52,7 +52,7 @@ class ProductDetails extends Component {
 									<div 
 										key={i}
 										className='list-image' 
-										background={`url(${image})`} 
+										style={{backgroundImage: `url(${image})`}} 
 									/>
 								))
 							}
@@ -77,7 +77,7 @@ class ProductDetails extends Component {
 						{
 							features &&
 							features.map((feature, i) => (
-								<span>{`&#8226; ${feature}`}</span>
+								<span key={i}>&#8226;{` ${feature}`}</span>
 							))
 						}
 					</div>
