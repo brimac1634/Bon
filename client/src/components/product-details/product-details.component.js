@@ -53,6 +53,7 @@ class ProductDetails extends Component {
 										key={i}
 										className='list-image' 
 										style={{backgroundImage: `url(${image})`}} 
+										onClick={()=>this.setState({currentImage: image})}
 									/>
 								))
 							}
