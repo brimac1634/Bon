@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const CollectionPage = ({ collection, match }) => {
-	console.log(match)
+	console.log(collection)
 	const { title, items } = collection;
 	return (
 		<div>

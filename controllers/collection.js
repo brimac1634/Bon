@@ -47,12 +47,11 @@ const updateCollection = (req, res, db) => {
 
 const updateCollectionImages = (req, res, db) => {
 	const { productID } = req.body;
-	const date = new Date();
 	const images = req.files.map(({ location }) => {
 		return { 
-			product_id: productID, 
+			product_id: Number(productID), 
 			media_url: location, 
-			timestamp: date
+			timestamp: new Date()
 		}
 	})
 	db('images')
@@ -72,6 +71,19 @@ const updateCollectionImages = (req, res, db) => {
 const getCollection = (res, db) => {
 	db.select('*').from('collection')
 		.orderBy('timestamp', 'desc')
+		.then(products => {
+			return products.map(product => {
+				return db.select('media_url', 'timestamp').from('images')
+					.where('product_id', product.id)
+					.orderBy('timestamp', 'desc')
+					.then(mediaURLs => {
+						const images = mediaURLs.map(url => url.media_url)
+						return {...product, images}
+					})
+					.catch(console.log)
+			})
+		})
+		.then(promises => Promise.all(promises))
 		.then(collection => res.send(collection))
 		.catch(err => {
 			console.log(err)

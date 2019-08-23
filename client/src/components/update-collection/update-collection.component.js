@@ -151,7 +151,7 @@ class AddProduct extends Component {
 								name='price' 
 								type='text' 
 								value={price} 
-								label='Price'
+								label='Price (HKD)'
 								handleChange={this.handleChange}
 							/>
 							<FormInput 

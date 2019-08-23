@@ -2,24 +2,33 @@ import { createSelector } from 'reselect'
 
 const selectShop = state => state.shop;
 
-export const selectCollections = createSelector(
+export const selectItemsMap = createSelector(
 	[selectShop],
-	shop => shop.collections
+	shop => shop.collections.reduce((accum, item) => {
+		accum[item.id] = item;
+		return accum
+	}, {})
 )
 
-export const selectCollectionsForPreview = createSelector(
-	[selectCollections],
-	collections => collections ? Object.keys(collections).map(key => collections[key]) : []
+export const selectCollectionsMap = createSelector(
+	[selectShop],
+	shop => shop.collections.reduce((accum, item) => {
+		let category = accum[item.category];
+		accum[item.category] = category
+			? { ...category, items: [...category.items, item]}
+			: { title: item.category, items: [item]}
+		return accum
+	}, {})
 )
 
 export const selectCollection = collectionUrlParam => createSelector(
-	[selectCollections],
+	[selectCollectionsMap],
 	collections => collections ? collections[collectionUrlParam] : null
 )
 
 export const selectProduct = productUrlParam => createSelector(
-	[selectCollections],
-	collections => collections
+	[selectItemsMap],
+	items => items ? items[productUrlParam] : null
 )
 
 export const selectIsCollectionFetching = createSelector(

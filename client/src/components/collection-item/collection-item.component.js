@@ -6,21 +6,23 @@ import CustomButton from '../custom-button/custom-button.component';
 import './collection-item.styles.scss';
 
 const CollectionItem = ({ item, addItem, history, match }) => {
-	const { name, price, imageUrls, id } = item;
-
+	const { name, price, images, id } = item;
+	
 	return (
-		<div className='collection-item'>
-			<div className='image' style={{backgroundImage: `url(${imageUrls[0]}`}}/>
-			<div className='collection-footer'>
-				<span className='name'>{ name }</span>
-				<span className='price'>{`HKD$${price}`}</span>
+		<div 
+			className='collection-item' 
+			onClick={()=>history.push(`${match.url}/${id}`)}
+		>
+			<div className='inner-container'>
+				<div 
+					className='image' 
+					style={{backgroundImage: `url(${images[0]}`}} 
+				/>
+				<div className='collection-footer'>
+					<span className='name'>{ name }</span>
+					<span className='price'>{`HKD$${price}`}</span>
+				</div>
 			</div>
-			<CustomButton 
-				inverted
-				onClick={()=>history.push(`${match.url}/${id}`)}
-			> 
-				View Details 
-			</CustomButton>
 		</div>
 	)
 }
