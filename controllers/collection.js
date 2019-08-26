@@ -27,6 +27,21 @@ const updateCollection = (req, res, db) => {
 		: ''
 	if (productID) {
 		//editing collection item
+		db('collection')
+			.returning('*')
+			.where('id', productID)
+			.update({
+				name, 
+				price,
+				quantity,
+				description, 
+				features: featuresString,
+			})
+			.then(item => res.send(item))
+			.catch(err => {
+				console.log(err)
+				res.status(500).send('unable to update item')
+			})
 	} else {
 		//new item
 		db('collection')

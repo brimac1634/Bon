@@ -32,6 +32,7 @@ class AddProduct extends Component {
 			description: '',
 			featuresField: '',
 			features: null,
+			initialImages: null,
 			images: null
 		}
 	}
@@ -45,7 +46,7 @@ class AddProduct extends Component {
 					id, description, features, images, name, price, quantity
 				}
 			 } = this.props;
-			 
+
 			this.setState({
 				productID: id,
 				name,
@@ -53,6 +54,7 @@ class AddProduct extends Component {
 				quantity,
 				description,
 				features,
+				initialImages: images,
 				images
 			})
 		}
@@ -63,10 +65,10 @@ class AddProduct extends Component {
 		const { startLoading, stopLoading } = this.props;
 		startLoading('Updating Collection...')
 		const form = this.state;
-		axios.post('update-collection', form)
+		axios.post('/update-collection', form)
 			.then(({ data }) => {
 				if (form.images) {
-					this.uploadImages(data[0].id)
+					// this.uploadImages(data[0].id)
 				} else {
 					stopLoading()
 				}
