@@ -1,40 +1,17 @@
-import shorts from '../../assets/shorts.jpg';
 import accessories from '../../assets/accessories.jpg';
 import jackets from '../../assets/jackets.jpg';
-import shirts from '../../assets/shirts.jpg';
-import trousers from '../../assets/trousers.jpg';
 
 export default [
   {
-    title: 'shorts',
-    imageUrl: shorts,
-    id: 1,
-    linkUrl: 'shorts'
-  },
-  {
-    title: 'accessories',
+    title: 'online',
     imageUrl: accessories,
-    id: 2,
-    linkUrl: 'accessories'
+    id: 1,
+    linkUrl: 'online'
   },
   {
-    title: 'shirts',
-    imageUrl: shirts,
-    id: 3,
-    linkUrl: 'shirts'
-  },
-  {
-    title: 'trousers',
-    imageUrl: trousers,
-    size: 'large',
-    id: 4,
-    linkUrl: 'trousers'
-  },
-  {
-    title: 'jackets',
+    title: 'in-store',
     imageUrl: jackets,
-    size: 'large',
-    id: 5,
-    linkUrl: 'jackets'
+    id: 2,
+    linkUrl: 'in-store'
   }
 ]

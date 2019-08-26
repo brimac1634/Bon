@@ -8,6 +8,7 @@ import shopReducer from './shop/shop.reducer';
 import galleryReducer from './gallery/gallery.reducer';
 import menuReducer from './menu/menu.reducer';
 import loadingReducer from './loading/loading.reducer';
+import alertReducer from './alert/alert.reducer';
 
 const persistConfig = {
 	key: 'root',
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
 	shop: shopReducer,
 	gallery: galleryReducer,
 	menu: menuReducer,
-	loading: loadingReducer
+	loading: loadingReducer,
+	alert: alertReducer
 })
 
 export default persistReducer(persistConfig, rootReducer);

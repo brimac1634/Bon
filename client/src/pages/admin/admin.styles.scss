@@ -1,5 +1,22 @@
 .admin {
-	display: flex;
-	justify-content: center;
 	padding-top: 20px;
+
+	.admin-home {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.panels {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+
+			.panel {
+				width: 100%;
+				max-width: 450px;
+			}
+		}
+	}
 }

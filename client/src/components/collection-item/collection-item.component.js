@@ -1,13 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import CustomButton from '../custom-button/custom-button.component';
-
 import './collection-item.styles.scss';
 
 const CollectionItem = ({ item, addItem, history, match }) => {
 	const { name, price, images, id } = item;
-	
 	return (
 		<div 
 			className='collection-item' 

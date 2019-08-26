@@ -34,7 +34,7 @@ class ProductDetails extends Component {
 		const { 
 			addItem,
 			product, 
-			product: { id, name, images, price, description, features } 
+			product: { name, images, price, description, features } 
 		} = this.props;
 
 		return (

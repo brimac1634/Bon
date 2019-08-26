@@ -21,7 +21,7 @@ const upload = multer({ storage })
 const uploadImages = () => upload.array('images')
 
 const updateCollection = (req, res, db) => {
-	const { productID, name, price, quantity, category, description, features } = req.body;
+	const { productID, name, price, quantity, description, features } = req.body;
 	const featuresString = features 
 		? features.join(';')
 		: ''
@@ -34,8 +34,7 @@ const updateCollection = (req, res, db) => {
 			.insert({ 
 				name, 
 				price,
-				quantity, 
-				category, 
+				quantity,
 				description, 
 				features: featuresString,
 				timestamp: new Date() 

@@ -3,18 +3,22 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
+import { setAlert } from '../../redux/alert/alert.actions';
+import { selectProduct } from '../../redux/shop/shop.selectors';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import Trigger from '../compound/compound-trigger.component';
-import Controller from '../compound/compound-controller.component';
-import DropList from '../dropdown/drop-list.component';
 
 import './update-collection.styles.scss';
 
+const mapStateToProps = (state, ownProps) => ({
+	product: selectProduct(ownProps.match.params.productID)(state)
+})
+
 const mapDispatchToProps = dispatch => ({
 	startLoading: message => dispatch(startLoading(message)),
-	stopLoading: () => dispatch(stopLoading())
+	stopLoading: () => dispatch(stopLoading()),
+	setAlert: message => dispatch(setAlert(message))
 })
 
 class AddProduct extends Component {
@@ -25,11 +29,32 @@ class AddProduct extends Component {
 			name: '',
 			price: '',
 			quantity: '',
-			category: '',
 			description: '',
 			featuresField: '',
 			features: null,
 			images: null
+		}
+	}
+
+	componentDidMount() {
+		const { product } = this.props;
+
+		if (product) {
+			const { 
+				product: {
+					id, description, features, images, name, price, quantity
+				}
+			 } = this.props;
+			 
+			this.setState({
+				productID: id,
+				name,
+				price,
+				quantity,
+				description,
+				features,
+				images
+			})
 		}
 	}
 
@@ -47,12 +72,13 @@ class AddProduct extends Component {
 				}
 			})
 			.catch(err => {
+				stopLoading()
 				console.log(err)
 			})
 	}
 
 	uploadImages = async productID => {
-		const { startLoading, stopLoading } = this.props;
+		const { startLoading, stopLoading, setAlert } = this.props;
 		startLoading('Uploading Images...')
 		const { images } = this.state;
 		let formData = new FormData();
@@ -64,15 +90,15 @@ class AddProduct extends Component {
 			headers: { 'content-type': 'multipart/form-data' },
 			data: formData
 		}).then(({ data }) => {
+			setAlert('collection updated')
 			stopLoading()
-			console.log('response here', data)
 			this.setState({ 
 				productID: '',
 				name: '',
 				price: '',
 				quantity: '',
-				category: '',
 				description: '',
+				featuresField: '',
 				features: null,
 				images: null
 			})
@@ -97,11 +123,6 @@ class AddProduct extends Component {
 		}
 	}
 
-
-	categorySelect = category => {
-		this.setState({ category })
-	}
-
 	handleChangeFile = e => {
 		let { images } = this.state;
 		const files = e.target.files;
@@ -123,14 +144,12 @@ class AddProduct extends Component {
 		const { 
 			name, 
 			price, 
-			quantity, 
-			category, 
+			quantity,
 			description, 
 			featuresField,
 			features,
 			images
 		} = this.state;
-		const categoryList = ['shorts', 'shirts', 'trousers', 'jackets', 'accessories'];
 
 		return (
 			<div className='update-collection'>
@@ -145,21 +164,6 @@ class AddProduct extends Component {
 								handleChange={this.handleChange}
 								required 
 							/>
-							<Controller>
-								<Trigger>
-									<div>
-										<FormInput 
-											disabled
-											value={category} 
-											label='Category'
-										/>
-									</div>
-								</Trigger>
-								<DropList
-									list={categoryList} 
-									handleSelection={this.categorySelect}
-								/>
-							</Controller>
 							<FormInput 
 								name='price' 
 								type='number' 
@@ -230,10 +234,18 @@ class AddProduct extends Component {
 									images &&
 									images.map((image, i) => (
 										<div className='image' key={i}>
-											<img 
-												src={URL.createObjectURL(image)}
-												alt={image.name}
-											/>
+											{
+												(typeof image === 'string')
+													? <img 
+														src={image}
+														alt={image}
+													/>
+													: <img 
+														src={URL.createObjectURL(image)}
+														alt={image.name}
+													/>
+
+											}
 											<span className='img-label'>{image.name}</span>
 											<div 
 												className='x'
@@ -256,4 +268,4 @@ class AddProduct extends Component {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(AddProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);
