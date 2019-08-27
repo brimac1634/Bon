@@ -4,10 +4,11 @@ const multerS3 = require('multer-s3')
 const AWS = require('aws-sdk');
 
 const s3 = new AWS.S3();
+const bucket = 'bon-vivant-images';
 
 const storage = multerS3({
     s3,
-    bucket: 'bon-vivant-images',
+    bucket,
     key: function (req, file, cb) {
     	const nameSplit = file.originalname.split('.')
     	const name = nameSplit[0];
@@ -24,12 +25,12 @@ const updateCollection = (req, res, db) => {
 	const { productID, name, price, quantity, description, features } = req.body;
 	const featuresString = features 
 		? features.join(';')
-		: ''
+		: null
 	if (productID) {
 		//editing collection item
 		db('collection')
 			.returning('*')
-			.where('id', productID)
+			.where('product_id', productID)
 			.update({
 				name, 
 				price,
@@ -62,11 +63,40 @@ const updateCollection = (req, res, db) => {
 	}
 }
 
-const updateCollectionImages = (req, res, db) => {
+const handleImageUpdate = (req, res, db) => {
+	const { productID, imageURLs } = req.body;
+	db.select('*').from('images')
+		.where('product_id', productID)
+		.then(images => {
+			images.forEach(({ image_id, key, media_url }) => {
+				if (!imageURLs.includes(media_url)) {
+					s3.deleteObject({
+					    Bucket: bucket,
+					    Key: key
+					}, (err, data) => {
+						if (err) return;
+						db('images')
+							.returning('*')
+							.where('image_id', image_id)
+							.del()
+							.catch(err => console.log(err))
+					})
+				}
+			})
+		})
+		.then(()=>res.send('images removed'))
+		.catch(err =>{
+			console.log(err)
+			res.status(500).send('unable to update existing images')
+		})
+}
+
+const handleImageUpload = (req, res, db) => {
 	const { productID } = req.body;
-	const images = req.files.map(({ location }) => {
+	const images = req.files.map(({ key, location }) => {
 		return { 
 			product_id: Number(productID), 
+			key,
 			media_url: location, 
 			timestamp: new Date()
 		}
@@ -90,14 +120,16 @@ const getCollection = (res, db) => {
 		.orderBy('timestamp', 'desc')
 		.then(products => {
 			return products.map(product => {
+				const { product_id, features } = product;
 				return db.select('media_url', 'timestamp').from('images')
-					.where('product_id', product.id)
+					.where('product_id', product_id)
 					.orderBy('timestamp', 'desc')
 					.then(mediaURLs => {
 						const images = mediaURLs.map(url => url.media_url)
 						return {
-							...product, 
-							features: product.features.split(';'),
+							...product,
+							productID: product_id, 
+							features: features ? features.split(';') : null,
 							images
 						}
 					})
@@ -118,5 +150,6 @@ module.exports = {
 	getCollection,
 	updateCollection,
 	uploadImages,
-	updateCollectionImages
+	handleImageUpdate,
+	handleImageUpload
 }

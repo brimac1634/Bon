@@ -10,7 +10,7 @@ export const selectCollection = createSelector(
 export const selectItemsMap = createSelector(
 	[selectShop],
 	shop => shop.collection.reduce((accum, item) => {
-		accum[item.id] = item;
+		accum[item.productID] = item;
 		return accum
 	}, {})
 )

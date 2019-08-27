@@ -22,7 +22,7 @@ class Admin extends Component {
 
 	render() {
 		const { history, match } = this.props;
-
+		
 		return (
 			<div className='admin'>
 				<Route 

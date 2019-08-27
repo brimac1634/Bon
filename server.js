@@ -61,8 +61,13 @@ app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 
 app.get('/get-collection', (req, res) => { collection.getCollection(res, db) })
  
-app.post('/update-collection-images', collection.uploadImages(), (req, res) => { collection.updateCollectionImages(req, res, db)
+app.post('/upload-images', collection.uploadImages(), (req, res) => { collection.handleImageUpload(req, res, db)
 })
+
+app.post('/update-images', (req, res) => { 
+  collection.handleImageUpdate(req, res, db)
+})
+
 app.post('/update-collection', (req, res) => { 
   collection.updateCollection(req, res, db)
 })

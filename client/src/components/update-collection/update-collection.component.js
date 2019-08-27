@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
 import { setAlert } from '../../redux/alert/alert.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { selectProduct } from '../../redux/shop/shop.selectors';
 
 import FormInput from '../form-input/form-input.component';
@@ -16,6 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+	fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
 	startLoading: message => dispatch(startLoading(message)),
 	stopLoading: () => dispatch(stopLoading()),
 	setAlert: message => dispatch(setAlert(message))
@@ -43,18 +46,18 @@ class AddProduct extends Component {
 		if (product) {
 			const { 
 				product: {
-					id, description, features, images, name, price, quantity
+					productID, description, features, images, name, price, quantity
 				}
 			 } = this.props;
 
 			this.setState({
-				productID: id,
+				productID,
 				name,
 				price,
 				quantity,
 				description,
 				features,
-				initialImages: images,
+				initialImages: [...images],
 				images
 			})
 		}
@@ -62,52 +65,89 @@ class AddProduct extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-		const { startLoading, stopLoading } = this.props;
+		const { startLoading, stopLoading, setAlert } = this.props;
+		const { initialImages, images } = this.state;
 		startLoading('Updating Collection...')
 		const form = this.state;
 		axios.post('/update-collection', form)
 			.then(({ data }) => {
-				if (form.images) {
-					// this.uploadImages(data[0].id)
+				if (images !== initialImages) {
+					this.updateImages(data[0].product_id, images);
 				} else {
 					stopLoading()
+					setAlert('collection updated')
 				}
 			})
 			.catch(err => {
 				stopLoading()
+				setAlert('unable to update collection')
 				console.log(err)
 			})
 	}
 
-	uploadImages = async productID => {
-		const { startLoading, stopLoading, setAlert } = this.props;
-		startLoading('Uploading Images...')
-		const { images } = this.state;
-		let formData = new FormData();
-		images.forEach(image => formData.append('images', image))
-		formData.append('productID', productID)
-		axios({
-			url: 'update-collection-images',
-			method: 'POST',
-			headers: { 'content-type': 'multipart/form-data' },
-			data: formData
-		}).then(({ data }) => {
-			setAlert('collection updated')
-			stopLoading()
-			this.setState({ 
-				productID: '',
-				name: '',
-				price: '',
-				quantity: '',
-				description: '',
-				featuresField: '',
-				features: null,
-				images: null
+	parseImages = images => {
+		let imageURLs = [];
+		let imageFiles = [];
+		images.forEach(image => {
+			if (typeof(image) === 'string') {
+				imageURLs.push(image);
+			} else {
+				imageFiles.push(image);
+			}
+		})
+		return { imageURLs, imageFiles }
+	}
+
+	updateImages = async (productID, images) => {
+		const { imageURLs, imageFiles } = this.parseImages(images);
+		const { startLoading, stopLoading } = this.props;
+		startLoading('Updating Images...')
+		axios.post('/update-images', { productID, imageURLs })
+			.then(({ data }) => {
+				console.log(data)
+				this.uploadImages(productID, imageFiles)
 			})
-		}).catch(err => {
-			console.log(err)
-			stopLoading()
-		});
+			.catch(err => {
+				console.log(err)
+				stopLoading();
+				setAlert('unable to update collection')
+			})
+	}
+
+	uploadImages = async (productID, imageFiles) => {
+		const { startLoading, stopLoading, setAlert, history, fetchCollectionsStart } = this.props;
+
+		const finishUpdate = () => {
+			setAlert('collection updated');
+			stopLoading();
+			fetchCollectionsStart();
+			history.push('/admin');
+		}
+
+		if (!imageFiles.length) {
+			finishUpdate();
+		} else {
+			startLoading('Uploading Images...')
+			let formData = new FormData();
+			imageFiles.forEach(image => formData.append('images', image))
+			formData.append('productID', productID)
+			axios({
+				url: '/upload-images',
+				method: 'POST',
+				headers: { 'content-type': 'multipart/form-data' },
+				data: formData
+			}).then(({ data }) => {
+				finishUpdate();
+			}).catch(err => {
+				console.log(err)
+				stopLoading();
+				setAlert('unable to update collection');
+			});
+		}
+	}
+
+	delete = () => {
+
 	}
 
 	handleChange = e => {
@@ -144,6 +184,7 @@ class AddProduct extends Component {
 
 	render() {
 		const { 
+			productID,
 			name, 
 			price, 
 			quantity,
@@ -262,6 +303,10 @@ class AddProduct extends Component {
 						</div>
 					</div>
 					<div className='buttons'>
+						{
+							productID &&
+							<CustomButton color='#d15047' onClick={this.delete}> Delete </CustomButton>
+						}
 						<CustomButton type='submit'> Submit </CustomButton>
 					</div>
 				</form>
@@ -270,4 +315,4 @@ class AddProduct extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddProduct));

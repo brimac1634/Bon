@@ -17,7 +17,7 @@ const CollectionList = ({ collection }) => (
 		{
 			collection &&
 			collection.map(item => (
-				<CollectionItem key={item.id} item={item} />
+				<CollectionItem key={item.productID} item={item} />
 			))
 		}
 	</div>
