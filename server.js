@@ -72,6 +72,10 @@ app.post('/update-collection', (req, res) => {
   collection.updateCollection(req, res, db)
 })
 
+app.post('/delete-product', (req, res) => { 
+  collection.deleteProduct(req, res, db)
+})
+
 app.post('/payment', (req, res) => { payment.handlePayment(req, res) })
 
 app.post('/contact-us', (req, res) => { contact.handleContact(req, res) })

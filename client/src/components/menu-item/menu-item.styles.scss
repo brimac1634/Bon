@@ -23,10 +23,6 @@
     }
   }
 
-  &.large {
-    height: 450px;
-  }
-
   &:first-child {
     margin-right: 7.5px;
   }
@@ -37,18 +33,10 @@
 
   @media screen and (max-width: 1024px) {
     height: 300px;
-
-    &.large {
-      height: 300px;
-    }
   }
 
   @media screen and (max-width: 500px) {
     height: 200px;
-
-    &.large {
-      height: 200px;
-    }
   }
 
   .background-image {

@@ -115,6 +115,39 @@ const handleImageUpload = (req, res, db) => {
 
 }
 
+const deleteProduct = (req, res, db) => {
+	const { productID } = req.body;
+	db.transaction(trx => {
+		return trx('collection')
+		.returning('*')
+		.where('product_id', productID)
+		.del()
+		.then(() => {
+			return trx('images')
+			.returning('*')
+			.where('product_id', productID)
+			.del()
+			.then(images => {
+				images.forEach(({ key }) => {
+					s3.deleteObject({
+					    Bucket: bucket,
+					    Key: key
+					}, (err, data) => {
+						if (err) throw new Error;
+					})
+				})
+				res.send('item deleted')
+			})
+			.catch(err => {
+				console.log(err)
+				res.status(500).send('unable to delete item')
+			})
+		})
+		.then(trx.commit)
+		.catch(trx.rollback) 
+	})
+}
+
 const getCollection = (res, db) => {
 	db.select('*').from('collection')
 		.orderBy('timestamp', 'desc')
@@ -150,6 +183,7 @@ module.exports = {
 	getCollection,
 	updateCollection,
 	uploadImages,
+	deleteProduct,
 	handleImageUpdate,
 	handleImageUpload
 }

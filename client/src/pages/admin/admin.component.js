@@ -7,11 +7,13 @@ import CollectionList from '../../components/collection-list/collection-list.com
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
+import { signOutStart } from '../../redux/user/user.actions';
 
 import './admin.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
+	fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
+	signOutStart: () => dispatch(signOutStart())
 })
 
 class Admin extends Component {
@@ -21,7 +23,7 @@ class Admin extends Component {
 	}
 
 	render() {
-		const { history, match } = this.props;
+		const { history, match, signOutStart } = this.props;
 		
 		return (
 			<div className='admin'>
@@ -32,11 +34,16 @@ class Admin extends Component {
 						<div className='admin-home'>
 							<h2>Welcome back, Andrew</h2>
 							<div className='panels'>
-								<div className='panel'>
+								<div className='panel buttons'>
 									<CustomButton 
 										onClick={()=>history.push(`${match.url}/new`)}
 									>
-										New Product 
+										Add Product 
+									</CustomButton>
+									<CustomButton 
+										onClick={signOutStart}
+									>
+										Sign Out
 									</CustomButton>
 								</div>
 								<div className='panel'>

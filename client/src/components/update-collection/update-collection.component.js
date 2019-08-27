@@ -115,17 +115,10 @@ class AddProduct extends Component {
 	}
 
 	uploadImages = async (productID, imageFiles) => {
-		const { startLoading, stopLoading, setAlert, history, fetchCollectionsStart } = this.props;
-
-		const finishUpdate = () => {
-			setAlert('collection updated');
-			stopLoading();
-			fetchCollectionsStart();
-			history.push('/admin');
-		}
+		const { startLoading, stopLoading, setAlert } = this.props;
 
 		if (!imageFiles.length) {
-			finishUpdate();
+			this.finishUpdate();
 		} else {
 			startLoading('Uploading Images...')
 			let formData = new FormData();
@@ -136,8 +129,8 @@ class AddProduct extends Component {
 				method: 'POST',
 				headers: { 'content-type': 'multipart/form-data' },
 				data: formData
-			}).then(({ data }) => {
-				finishUpdate();
+			}).then(() => {
+				this.finishUpdate();
 			}).catch(err => {
 				console.log(err)
 				stopLoading();
@@ -146,8 +139,26 @@ class AddProduct extends Component {
 		}
 	}
 
-	delete = () => {
+	delete = productID => {
+		const { startLoading, stopLoading, setAlert } = this.props;
+		startLoading('deleting item');
+		axios.post('/delete-product', { productID })
+			.then(() => {
+				this.finishUpdate();
+			})
+			.catch(err => {
+				console.log(err)
+				stopLoading();
+				setAlert('unable to delete item');
+			});
+	}
 
+	finishUpdate = () => {
+		const { stopLoading, setAlert, history, fetchCollectionsStart } = this.props;
+		setAlert('collection updated');
+		stopLoading();
+		fetchCollectionsStart();
+		history.push('/admin');
 	}
 
 	handleChange = e => {
@@ -305,7 +316,7 @@ class AddProduct extends Component {
 					<div className='buttons'>
 						{
 							productID &&
-							<CustomButton color='#d15047' onClick={this.delete}> Delete </CustomButton>
+							<CustomButton color='#d15047' onClick={()=>this.delete(productID)}> Delete </CustomButton>
 						}
 						<CustomButton type='submit'> Submit </CustomButton>
 					</div>

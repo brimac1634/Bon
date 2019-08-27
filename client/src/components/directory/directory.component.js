@@ -7,14 +7,17 @@ import './directory.styles.scss';
 
 const Directory = () => (
 	<div className='directory-menu'>
-		{directoryData.map(({ id, ...otherSectionProps})=>{
-			return (
-				<MenuItem
-					key={id}
-					{...otherSectionProps}
-				/>
-			)
-		})}
+		<h1>SHOP</h1>
+		<div className='inner-directory'>
+			{directoryData.map(({ id, ...otherSectionProps})=>{
+				return (
+					<MenuItem
+						key={id}
+						{...otherSectionProps}
+					/>
+				)
+			})}
+		</div>
 	</div>
 )
 
