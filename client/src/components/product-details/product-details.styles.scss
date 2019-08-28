@@ -24,36 +24,45 @@
 			align-items: flex-start;
 			margin-bottom: 40px;
 
+			span, p {
+				font-size: 120%;
+			}
+
 			.main-image {
 				width: 100%;
 				height: 500px;
 				background-size: cover;
 			    background-position: center;
 			    margin-bottom: 20px;
-			    animation: fade-in 600ms ease-in-out;
 
-			    @keyframes fade-in {
-			      0% {
-			        opacity: 0;
-			      }
-			      100% {
-			        opacity: 1;
-			      }
+			    &.fade-in {
+			    	animation: fade-in 400ms ease-in-out;
+			    }
+
+			    &.fade-out {
+			    	animation: fade-out 400ms ease-in-out;
 			    }
 			}
 
 			.image-list {
-				display: flex;
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+			    grid-gap: 10px;
 
 				.list-image {
-					width: 120px;
-					height: 120px;
+					width: 100%;
 					border: solid 1px grey;
-					margin: 0 10px 0 0;
 					background-size: cover;
 					background-position: center;
 					cursor: pointer;
 					transition: all 200ms ease-in-out;
+
+					&:after {
+						content: "";
+						display: block;
+						padding-bottom: 100%;
+					}
 
 					&:hover {
 				        opacity: 0.8;
@@ -64,6 +73,57 @@
 			.price {
 				color: grey;
 				font-size: 150%;
+			}
+
+			.description {
+				margin: 20px 0;
+			}
+
+			.feature {
+				display: flex;
+
+				:first-child {
+					margin: 0 10px 5px 0;
+				}
+			}
+
+			.share {
+				margin-top: 40px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+
+				:first-child {
+					margin-bottom: 10px;
+				}
+				
+				.share-buttons {
+					display: flex;
+					cursor: pointer;
+
+					&:hover .icon {
+						fill: gray;
+					}
+
+					.icon {
+						margin: 0 5px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						&:hover {
+							fill: black;
+						}
+
+						svg {
+							width: 26px;
+							height: 26px;
+							transition: all 200ms ease-in-out;
+							margin: 0;
+						}
+						
+					}
+				}
 			}
 		}
 	}

@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { 
+	FacebookShareButton,
+	TwitterShareButton,
+	WhatsappShareButton,
+	EmailShareButton 
+} from 'react-share';
 
 import { selectProduct } from '../../redux/shop/shop.selectors';
 import { addItem } from '../../redux/cart/cart.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { ReactComponent as FacebookIcon } from '../../assets/facebook.svg'
+import { ReactComponent as EmailIcon } from '../../assets/email.svg'
+import { ReactComponent as TwitterIcon } from '../../assets/twitter.svg'
+import { ReactComponent as WhatsappIcon } from '../../assets/whatsapp.svg'
 
 import './product-details.styles.scss';
 
@@ -20,8 +30,13 @@ const mapDispatchToProps = dispatch => ({
 
 class ProductDetails extends Component {
 	state = {
+		fade: 'fade-in',
 		currentImage: this.props.product.images[0],
 		quantity: 1
+	}
+
+	componentDidMount() { 
+		setTimeout(()=>this.setState({fade: null}), 600) 
 	}
 
 	handleChange = e => {
@@ -29,20 +44,30 @@ class ProductDetails extends Component {
 		this.setState({ [name]: value});
 	}
 
+	changeImage = image => {
+		this.setState({fade: 'fade-out'})
+		setTimeout(()=>{
+			this.setState({fade: 'fade-in', currentImage: image})
+		}, 400)
+		setTimeout(()=>this.setState({fade: null}), 800)
+	}
+
 	render() {
-		const { currentImage, quantity } = this.state;
+		const { fade, currentImage, quantity } = this.state;
 		const { 
 			addItem,
 			product, 
 			product: { name, images, price, description, features } 
 		} = this.props;
 
+		const currentURL = window.location.href
+
 		return (
 			<div className='product-details'>
 				<div className='panels'>
 					<div className='panel'>
 						<div 
-							className='main-image' 
+							className={`main-image ${fade}`} 
 							style={{backgroundImage: `url(${currentImage})`}} 
 						/>
 						<div className='image-list'>
@@ -53,14 +78,14 @@ class ProductDetails extends Component {
 										key={i}
 										className='list-image' 
 										style={{backgroundImage: `url(${image})`}} 
-										onClick={()=>this.setState({currentImage: image})}
+										onClick={()=>this.changeImage(image)}
 									/>
 								))
 							}
 						</div>
 					</div>
 					<div className='panel'>
-						<h2>{ name }</h2>
+						<h1>{ name }</h1>
 						<span className='price'>{ `HKD$${price}` }</span>
 						<FormInput 
 							name='quantity' 
@@ -74,13 +99,53 @@ class ProductDetails extends Component {
 						> 
 							Add to Cart
 						</CustomButton>
-						<p>{ description }</p>
+						<p className='description'>{ description }</p>
 						{
 							features &&
 							features.map((feature, i) => (
-								<span key={i}>&#8226;{` ${feature}`}</span>
+								<div key={i} className='feature'>
+									<span >&#8226;</span>
+									<span>{ feature }</span>
+								</div>
 							))
 						}
+						<div className='share'>
+							<span>Share:</span>
+							<div className='share-buttons'>
+								<FacebookShareButton 
+									url={currentURL} 
+									hashtag='#bonvivantcollection'
+								>
+									<div className='icon'>
+										<FacebookIcon />
+									</div>
+								</FacebookShareButton>
+								<TwitterShareButton 
+									url={currentURL}
+									hashtags={['bonvivantcollection']} 
+								>
+									<div className='icon'>
+										<TwitterIcon />
+									</div>
+								</TwitterShareButton>
+								<WhatsappShareButton 
+									url={currentURL}
+									title='Bon Vivant Collection'
+								>
+									<div className='icon'>
+										<WhatsappIcon />
+									</div>
+								</WhatsappShareButton>
+								<EmailShareButton 
+									url={currentURL}
+									subject={`Bon Vivant Collection - ${name}`}
+								>
+									<div className='icon'>
+										<EmailIcon />
+									</div>
+								</EmailShareButton>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

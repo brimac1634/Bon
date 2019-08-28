@@ -156,7 +156,7 @@ const getCollection = (res, db) => {
 				const { product_id, features } = product;
 				return db.select('media_url', 'timestamp').from('images')
 					.where('product_id', product_id)
-					.orderBy('timestamp', 'desc')
+					.orderBy('timestamp', 'asc')
 					.then(mediaURLs => {
 						const images = mediaURLs.map(url => url.media_url)
 						return {

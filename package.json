@@ -28,6 +28,7 @@
     "nodemailer": "^6.3.0",
     "pg": "^7.12.1",
     "react-responsive": "^7.0.0",
+    "react-share": "^3.0.1",
     "stripe": "7.8.0"
   },
   "devDependencies": {
