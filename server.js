@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const nodemailer = require('nodemailer');
 const https = require('https');
 const knex = require('knex');
 

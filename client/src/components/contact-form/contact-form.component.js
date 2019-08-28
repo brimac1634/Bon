@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
+
+import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './contact-form.styles.scss';
+
+const mapDisptachToProps = dispatch => ({
+	startLoading: message => dispatch(startLoading(message)),
+	stopLoading: () => dispatch(stopLoading())
+})
 
 class ContactForm extends Component {
 	constructor(props) {
@@ -19,20 +27,24 @@ class ContactForm extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
+		const { startLoading, stopLoading } = this.props;
+		startLoading();
 		const form = this.state;
 		axios({
 			url: 'contact-us',
 			method: 'post',
 			data: form
 		}).then(res => {
-			console.log('response here', res)
-			// this.setState({ 
-			// 	fullName: '',
-			// 	email: '',
-			// 	subject: '',
-			// 	message: ''
-			// })
+			stopLoading();
+			//alert message was sent
+			this.setState({ 
+				fullName: '',
+				email: '',
+				subject: '',
+				message: ''
+			})
 		}).catch(err => {
+			stopLoading();
 			console.log(err)
 		});
 	}
@@ -89,4 +101,4 @@ class ContactForm extends Component {
 	}
 }
 
-export default ContactForm;
+export default connect(null, mapDisptachToProps)(ContactForm);
