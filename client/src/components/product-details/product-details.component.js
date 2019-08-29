@@ -10,9 +10,11 @@ import {
 
 import { selectProduct } from '../../redux/shop/shop.selectors';
 import { addItem } from '../../redux/cart/cart.actions';
+import { setAlert } from '../../redux/alert/alert.actions'; 
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import HoverZoom from '../hover-zoom/hover-zoom.component';
 import { ReactComponent as FacebookIcon } from '../../assets/facebook.svg'
 import { ReactComponent as EmailIcon } from '../../assets/email.svg'
 import { ReactComponent as TwitterIcon } from '../../assets/twitter.svg'
@@ -25,12 +27,12 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	addItem: item => dispatch(addItem(item))
+	addItem: item => dispatch(addItem(item)),
+	setAlert: message => dispatch(setAlert(message))
 })
 
 class ProductDetails extends Component {
 	state = {
-		fade: 'fade-in',
 		currentImage: this.props.product.images[0],
 		quantity: 1
 	}
@@ -41,21 +43,18 @@ class ProductDetails extends Component {
 
 	handleChange = e => {
 		const { value, name } = e.target;
-		this.setState({ [name]: value});
+		this.setState({ [name]: Number(value)});
 	}
 
-	changeImage = image => {
-		this.setState({fade: 'fade-out'})
-		setTimeout(()=>{
-			this.setState({fade: 'fade-in', currentImage: image})
-		}, 400)
-		setTimeout(()=>this.setState({fade: null}), 800)
+	addItemToCart = (item, quantity) => {
+		const { addItem, setAlert } = this.props;
+		addItem({ item, quantity });
+		setAlert('Added to Cart');
 	}
 
 	render() {
-		const { fade, currentImage, quantity } = this.state;
+		const { currentImage, quantity } = this.state;
 		const { 
-			addItem,
 			product, 
 			product: { name, images, price, description, features } 
 		} = this.props;
@@ -66,9 +65,9 @@ class ProductDetails extends Component {
 			<div className='product-details'>
 				<div className='panels'>
 					<div className='panel'>
-						<div 
-							className={`main-image ${fade}`} 
-							style={{backgroundImage: `url(${currentImage})`}} 
+						<HoverZoom 
+							src={currentImage} 
+							alt='product image' 
 						/>
 						<div className='image-list'>
 							{
@@ -78,7 +77,7 @@ class ProductDetails extends Component {
 										key={i}
 										className='list-image' 
 										style={{backgroundImage: `url(${image})`}} 
-										onClick={()=>this.changeImage(image)}
+										onClick={()=>this.setState({currentImage: image})}
 									/>
 								))
 							}
@@ -95,7 +94,7 @@ class ProductDetails extends Component {
 							handleChange={this.handleChange}
 						/>
 						<CustomButton 
-							onClick={()=>addItem(product)}
+							onClick={()=>this.addItemToCart(product, quantity)}
 						> 
 							Add to Cart
 						</CustomButton>

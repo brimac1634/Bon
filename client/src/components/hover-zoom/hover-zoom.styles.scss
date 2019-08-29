@@ -1,0 +1,23 @@
+.hover-zoom {
+	width: 100%;
+	height: auto;
+	background-position: center;
+	background-size: 220%;
+	background-repeat: no-repeat;
+	margin: 0 0 20px 0;
+	cursor: default;
+	border: solid 1px grey;
+
+	&:hover img {
+	    opacity: 0;
+	}
+
+	&.fade-in {
+    	animation: fade-in 400ms ease-in-out;
+    }
+
+	img {
+		width: 100%;
+		display: block;
+	}
+}
