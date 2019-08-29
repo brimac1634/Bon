@@ -2,6 +2,8 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
+import CustomButton from '../custom-button/custom-button.component';
+
 import logo from '../../assets/logo.svg';
 
 const StripeCheckoutButton = ({ price }) => {
@@ -27,7 +29,7 @@ const StripeCheckoutButton = ({ price }) => {
 	return (
 		<StripeCheckout
 			label='Pay Now'
-			name='Bon Vivant'
+			name='Bon Vivant Collection'
 			billingAddress
 			shippingAddress
 			image={logo}
@@ -37,7 +39,9 @@ const StripeCheckoutButton = ({ price }) => {
 			token={onToken}
 			stripeKey={publishableKey}
 			alipay
-		/>
+		>
+			<CustomButton>Pay Now</CustomButton>
+		</StripeCheckout>
 	)
 }
 

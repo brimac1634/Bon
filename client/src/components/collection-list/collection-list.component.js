@@ -15,10 +15,11 @@ const mapStateToProps = createStructuredSelector({
 const CollectionList = ({ collection }) => (
 	<div className='collection-list'>
 		{
-			collection &&
-			collection.map(item => (
-				<CollectionItem key={item.productID} item={item} />
-			))
+			collection
+			? 	collection.map(item => (
+					<CollectionItem key={item.productID} item={item} />
+				))
+			: 	<span>There are currently no items available</span>
 		}
 	</div>
 )

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
+import { setAlert } from '../../redux/alert/alert.actions';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -11,7 +12,8 @@ import './contact-form.styles.scss';
 
 const mapDisptachToProps = dispatch => ({
 	startLoading: message => dispatch(startLoading(message)),
-	stopLoading: () => dispatch(stopLoading())
+	stopLoading: () => dispatch(stopLoading()),
+	setAlert: message => dispatch(setAlert(message))
 })
 
 class ContactForm extends Component {
@@ -27,7 +29,7 @@ class ContactForm extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-		const { startLoading, stopLoading } = this.props;
+		const { startLoading, stopLoading, setAlert } = this.props;
 		startLoading();
 		const form = this.state;
 		axios({
@@ -36,7 +38,7 @@ class ContactForm extends Component {
 			data: form
 		}).then(res => {
 			stopLoading();
-			//alert message was sent
+			setAlert('Your message has been sent')
 			this.setState({ 
 				fullName: '',
 				email: '',

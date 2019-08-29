@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 import { startLoading, stopLoading } from '../../redux/loading/loading.actions';
-import { setAlert } from '../../redux/alert/alert.actions';
+import { setAlert } from '../../redux/alert/alert.actions'; 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { selectProduct } from '../../redux/shop/shop.selectors';
 
