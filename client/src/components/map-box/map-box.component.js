@@ -28,7 +28,8 @@ class MapBox extends Component {
 					<Marker 
 						latitude={22.278514}
 						longitude={114.17918} 
-						offsetTop={-10} 
+						offsetLeft={-15} 
+						offsetTop={-40} 
 					>
 						<div className='tick-container'>
 							<Logo />

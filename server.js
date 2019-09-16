@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const https = require('https');
 const knex = require('knex');
+const compression = require('compression');
 
 setInterval(function() {
     https.get('https://bon-vivant.herokuapp.com/');
@@ -32,11 +33,10 @@ const db = (process.env.PORT == 5000)
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(compression);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, 'client/build')))
