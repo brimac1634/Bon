@@ -1,16 +1,16 @@
-import accessories from '../../assets/accessories.jpg';
-import jackets from '../../assets/jackets.jpg';
+// import accessories from '../../assets/accessories.jpg';
+// import jackets from '../../assets/jackets.jpg';
 
 export default [
   {
     title: 'online',
-    imageUrl: accessories,
+    // imageUrl: accessories,
     id: 1,
     linkUrl: 'online'
   },
   {
     title: 'in-store',
-    imageUrl: jackets,
+    // imageUrl: jackets,
     id: 2,
     linkUrl: 'in-store'
   }

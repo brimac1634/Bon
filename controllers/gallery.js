@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const getGallery = (res, db) => {
+	console.log('here')
 	db.select('*').from('gallery')
 		.orderBy('timestamp', 'desc')
 		.then(gallery => res.status(200).send(gallery))

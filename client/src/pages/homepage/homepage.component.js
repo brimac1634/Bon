@@ -6,8 +6,6 @@ import Directory from '../../components/directory/directory.component';
 import JoinMail from '../../components/join-mail/join-mail.component';
 import Loader from '../../components/loader/loader.component';
 
-import needle from '../../assets/needle.png'
-import scissors from '../../assets/scissors.png'
 import './homepage.styles.scss';
 
 class HomePage extends Component {
@@ -49,7 +47,6 @@ class HomePage extends Component {
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
-							<img className='illustration' src={needle} alt='needle' />
 							<h2 className='text center'>
 								Men's Haberdashery specialising in handmade tailored clothing for those who live well.
 							</h2>
@@ -64,7 +61,6 @@ class HomePage extends Component {
 				<div className='row grey'>
 					<div className='col'>
 						<Fade bottom>
-							<img className='scissors' src={scissors} alt='needle' />
 							<p className='text center'>
 								Bon Vivant is an idea of appreciation - that there exists an intrinsic value to things that give joy in life. These works consist of ideas and memories that bear a connection to the past. What was before considered dated has been transmuted by the mere passing of years to a status at once modern and prevalent.
 							</p>
