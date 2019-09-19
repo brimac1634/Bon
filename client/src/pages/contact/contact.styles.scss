@@ -6,9 +6,9 @@
 
 	.inner-contact {
 		width: 100%;
-		padding: 40px 0;
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: wrap-reverse;
 		justify-content: space-around;
+		align-items: flex-start;
 	}
 }

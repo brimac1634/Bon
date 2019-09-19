@@ -31,7 +31,7 @@ const CartDropdown = ({ cartItems, history, toggleDropdown }) => {
 					toggleDropdown()
 				}}
 			>
-				GO TO CHECKOUT
+				CHECKOUT
 			</CustomButton>
 		</div>
 	)
