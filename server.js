@@ -12,7 +12,7 @@ setInterval(function() {
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
-const db = (process.env.PORT == 5000)
+const db = (process.env.NODE_ENV !== 'production')
 	? knex({
       client: 'pg',
       connection: {
@@ -33,7 +33,6 @@ const db = (process.env.PORT == 5000)
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(compression);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -41,7 +40,7 @@ app.use(cors());
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, 'client/build')))
 
-	app.get('*', function(req, res) {
+	app.get('*', compression, function(req, res) {
 		res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 	})
 }
@@ -55,6 +54,7 @@ app.listen(port, error => {
 	if (error) throw error;
 	console.log('server running on port ' + port)
 })
+
 
 app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 
@@ -80,7 +80,11 @@ app.post('/payment', (req, res) => { payment.handlePayment(req, res) })
 app.post('/contact-us', (req, res) => { contact.handleContact(req, res) })
 
 
-
+const scheduleGetMedia = () => setTimeout(()=>{
+  gallery.getRecentMedia(db);
+  scheduleGetMedia();
+}, 6000000)
+scheduleGetMedia();
 
 
 

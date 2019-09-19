@@ -8,13 +8,7 @@ const getGallery = (res, db) => {
 		.catch(res.status(500))
 }
 
-const scheduleGetMedia = () => setTimeout(()=>{
-	getRecentMedia();
-	scheduleGetMedia();
-}, 6000000)
-scheduleGetMedia();
-
-const getRecentMedia = () => {
+const getRecentMedia = (db) => {
 	console.log('getting recent media')
 	const instaToken = process.env.INSTA_TOKEN;
 	const getMediaIDs = async (url, mediaArray) => {

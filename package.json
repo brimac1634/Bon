@@ -6,8 +6,8 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "client": "cd client/ && dotenv npm start",
-    "server": "dotenv nodemon server.js",
+    "client": "cd client/ && npm start",
+    "server": "nodemon server.js",
     "build": "cd client/ && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
