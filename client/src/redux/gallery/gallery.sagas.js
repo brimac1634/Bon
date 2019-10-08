@@ -11,6 +11,7 @@ export function* fetchGalleryAsync() {
 		const gallery = data.map(({ media_type, media_url, ...item }) => (
 			{ mediaType: media_type, mediaUrl: media_url, ...item }
 		))
+		console.log(gallery)
 		yield put(fetchGallerySuccess(gallery))
 	} catch (err) {
 		yield put(fetchGalleryFailure(err.message))
