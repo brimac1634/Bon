@@ -4,12 +4,11 @@ import { connect } from 'react-redux'
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { googleSignInStart, emailSignInStart } from '../../redux/user/user.actions';
+import { emailSignInStart } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
 
 const mapDispatchToProps = dispatch => ({
-	googleSignInStart: () => dispatch(googleSignInStart()),
 	emailSignInStart: (email, password) => dispatch(emailSignInStart({ email, password}))
 })
 
@@ -35,7 +34,6 @@ class SignIn extends Component {
 	}
 
 	render() {
-		const { googleSignInStart } = this.props;
 		return (
 			<div className='sign-in'>
 				<h2>Admin Portal</h2>
@@ -57,13 +55,9 @@ class SignIn extends Component {
 						required 
 					/>
 					<div className='buttons'>
-						<CustomButton type='submit'> Sign In </CustomButton>
 						<CustomButton 
-							type='button'
-							isGoogleSignIn={true}
-							onClick={googleSignInStart}
-						> 
-							Sign In With Google
+							type='submit'> 
+							Sign In 
 						</CustomButton>
 					</div>
 				</form>
