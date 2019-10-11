@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
 const path = require('path');
 const https = require('https');
 const knex = require('knex');
@@ -45,16 +46,23 @@ if (process.env.NODE_ENV === 'production') {
 	})
 }
 
+const middleware = require('./middleware');
 const gallery = require('./controllers/gallery');
 const collection = require('./controllers/collection');
 const payment = require('./controllers/payment');
 const contact = require('./controllers/contact');
+const login = require('./controllers/login');
 
 app.listen(port, error => {
 	if (error) throw error;
 	console.log('server running on port ' + port)
 })
 
+app.get('/check-user', middleware.checkToken, (req, res) => { login.checkUser(req, res, db) });
+
+app.post('/login', (req, res) => { login.handleLogin(req, res, db, bcrypt) })
+
+app.post('/register', (req, res) => { login.handleRegister(req, res, db, bcrypt) })
 
 app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 

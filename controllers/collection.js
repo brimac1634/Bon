@@ -152,6 +152,7 @@ const getCollection = (res, db) => {
 	db.select('*').from('collection')
 		.orderBy('timestamp', 'desc')
 		.then(products => {
+			if (!products) return res.send(new CollectionNotFound())
 			return products.map(product => {
 				const { product_id, features } = product;
 				return db.select('media_url', 'timestamp').from('images')
