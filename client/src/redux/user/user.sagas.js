@@ -65,7 +65,6 @@ export function* isUserAuthenticated() {
 }
 
 export function* signOut() {
-	console.log('here')
 	const cookies = new Cookies();
     cookies.remove('authToken', { path: '/' });
     yield put(signOutSuccess())

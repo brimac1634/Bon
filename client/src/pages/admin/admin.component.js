@@ -1,15 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
-import UpdateCollectionContainer from '../../components/update-collection/update-collection.container';
 import CollectionList from '../../components/collection-list/collection-list.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import { signOutStart } from '../../redux/user/user.actions';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import './admin.styles.scss';
+
+const UpdateCollectionContainer = lazy(() => import('../../components/update-collection/update-collection.container'))
+
+const mapStateToProps = createStructuredSelector({
+	currentUser: selectCurrentUser
+})
 
 const mapDispatchToProps = dispatch => ({
 	fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
@@ -23,7 +30,7 @@ class Admin extends Component {
 	}
 
 	render() {
-		const { history, match, signOutStart } = this.props;
+		const { currentUser, history, match, signOutStart } = this.props;
 		
 		return (
 			<div className='admin'>
@@ -32,7 +39,7 @@ class Admin extends Component {
 					path={match.path} 
 					render={()=>(
 						<div className='admin-home'>
-							<h2>Welcome back, Andrew</h2>
+							<h2>{`Welcome back, ${currentUser.userName}`}</h2>
 							<div className='panels'>
 								<div className='panel buttons'>
 									<CustomButton 
@@ -62,4 +69,4 @@ class Admin extends Component {
 	}
 } 
 
-export default withRouter(connect(null, mapDispatchToProps)(Admin));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin));
