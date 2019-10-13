@@ -38,14 +38,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, 'client/build')))
-
-	app.get('*', compression, function(req, res) {
-		res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-	})
-}
-
 const middleware = require('./middleware');
 const gallery = require('./controllers/gallery');
 const collection = require('./controllers/collection');
