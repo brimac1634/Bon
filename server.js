@@ -7,9 +7,9 @@ const https = require('https');
 const knex = require('knex');
 const compression = require('compression');
 
-setInterval(function() {
-    https.get('https://bon-vivant.herokuapp.com/');
-}, 1000000);
+// setInterval(function() {
+//     https.get('https://bon-vivant.herokuapp.com/');
+// }, 1000000);
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
