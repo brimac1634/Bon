@@ -11,3 +11,8 @@ export const selectIsUserFetching = createSelector(
 	[selectUser],
 	user => user.isFetching
 )
+
+export const selectUserError = createSelector(
+	[selectUser],
+	user => user.error
+)

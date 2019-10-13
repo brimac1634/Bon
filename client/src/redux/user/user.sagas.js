@@ -1,63 +1,80 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-
-import { 
-	auth, 
-	createUserProfileDocument,
-	getCurrentUser
-} from '../../firebase/firebase.utils';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import UserActionTypes from './user.types';
 
 import { 
 	signInSuccess, 
 	signInFailure, 
-	signOutSuccess, 
-	signOutFailure
+	signOutSuccess
 } from './user.actions';
 
-export function* getSnapshotFromUserAuth(userAuth, otherData) {
-	try {
-		const userRef = yield call(createUserProfileDocument, userAuth, otherData);
-		const userSnapshot = yield userRef.get();
-		yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() })) 
+export function* handleSignIn(data) {
+	try {	
+		if (data.error) {
+			yield put(signInFailure(data.error))
+		} else {
+			const { user: { name, email }, token } = data;
+			yield put(signInSuccess({
+				userName: name,
+				userEmail: email
+			}));
+			const cookies = new Cookies();
+			cookies.set('authToken', token, { path: '/' });
+		}
 	} catch (err) {
-		yield put(signInFailure(err.message)) 
+		yield put(signInFailure(err))
 	}
 }
 
-export function* signInWithEmail({ payload: { email, password } }) {
+
+export function* signInWithEmail({ payload: { email, password }}) {
 	try {
-		const { user } = yield auth.signInWithEmailAndPassword(email, password)
-		yield getSnapshotFromUserAuth(user)
+		const { data } = yield axios.post('/login', {email, password})
+		if (data) {
+			yield call(handleSignIn, data)
+		} else {
+			yield put(signInFailure('unable to login'))
+		}
 	} catch (err) {
-		yield put(signInFailure(err.message))
+		yield put(signInFailure(err))
 	}
 }
 
 export function* isUserAuthenticated() {
-	try {
-		const userAuth = yield getCurrentUser();
-		if (!userAuth) { 
-			yield put(signOutSuccess()) 
-		} else { 
-			yield getSnapshotFromUserAuth(userAuth) 
+	const cookies = new Cookies();
+    const token = cookies.get('authToken')
+    if (token) {
+    	try {
+			const { data } = yield axios({
+				method: 'get',
+				url: '/check-user',
+				headers: {
+		            'Content-Type': 'application/json',
+		            'x-access-token': token
+		        }
+			})
+			yield put(signInSuccess(data));
+		} catch (err) {
+		    yield put(signInFailure('no user'))
 		}
-	} catch (err) {
-		yield put(signInFailure(err.message))
-	}
+    } else {
+    	yield put(signInFailure('no user'))
+    }
 }
 
 export function* signOut() {
-	try {
-		yield auth.signOut();
-		yield put(signOutSuccess());
-	} catch (err) {
-		yield put(signOutFailure(err.message));
-	}
+	console.log('here')
+	const cookies = new Cookies();
+    cookies.remove('authToken', { path: '/' });
+    yield put(signOutSuccess())
 }
 
 export function* onEmailSignInStart() {
-	yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START, signInWithEmail)
+	yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START,
+		signInWithEmail
+	)
 }
 
 export function* onCheckUserSession() {
@@ -75,3 +92,4 @@ export function* userSagas() {
 		call(onSignOutStart)
 	])
 }
+

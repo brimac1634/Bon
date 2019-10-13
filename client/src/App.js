@@ -49,8 +49,8 @@ const App = ({ checkUserSession, currentUser, setAlert, isLoading, loadingMessag
 
   useEffect(() => {
       if (currentUser) {
-          const { displayName } = currentUser;
-          setAlert(`Welcome, ${displayName}`)
+          const { userName } = currentUser;
+          setAlert(`Welcome, ${userName}`)
       }
   }, [currentUser, setAlert])
     
@@ -79,7 +79,7 @@ const App = ({ checkUserSession, currentUser, setAlert, isLoading, loadingMessag
               />
               <Route 
                 exact 
-                path='/signin' 
+                path='/login' 
                 render={() =>
                   currentUser ? (
                     <Redirect to={'/'}/>
