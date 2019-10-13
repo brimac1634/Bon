@@ -86,8 +86,6 @@ const scheduleGetMedia = () => setTimeout(()=>{
 }, 6000000)
 scheduleGetMedia();
 
-gallery.getRecentMedia(db);
-
 
 
 
