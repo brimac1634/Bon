@@ -150,6 +150,7 @@ const deleteProduct = (req, res, db) => {
 
 const getCollection = (res, db) => {
 	db.select('*').from('collection')
+		.orderBy('quantity', 'desc')
 		.orderBy('timestamp', 'desc')
 		.then(products => {
 			if (!products) return res.send(new CollectionNotFound())
