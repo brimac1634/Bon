@@ -59,6 +59,8 @@ app.post('/register', (req, res) => { login.handleRegister(req, res, db, bcrypt)
 app.get('/get-gallery', (req, res) => { gallery.getGallery(res, db) })
 
 app.get('/get-collection', (req, res) => { collection.getCollection(res, db) })
+
+app.post('/get-product-quantity', (req, res) => { collection.checkQuantity(req, res, db) })
  
 app.post('/upload-images', collection.uploadImages(), (req, res) => { collection.handleImageUpload(req, res, db)
 })

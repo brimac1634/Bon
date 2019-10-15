@@ -1,7 +1,8 @@
-
 const multer = require('multer');
 const multerS3 = require('multer-s3')
 const AWS = require('aws-sdk');
+
+const { ProductNotFound } = require('../errorCodes');
 
 const s3 = new AWS.S3();
 const bucket = 'bon-vivant-images';
@@ -179,6 +180,25 @@ const getCollection = (res, db) => {
 		})
 }
 
+const checkQuantity = (req, res, db) => {
+	const { productIDs } = req.body;
+	const promises = productIDs.map(productID => {
+		return db.select('product_id', 'quantity').from('collection')
+		.where('product_id', productID)
+		.then(([item]) => item)
+		.catch(err => {
+			console.log(err)
+			res.send(new ProductNotFound())
+		})
+	})
+	Promise.all(promises)
+		.then(itemQuantities => res.send(itemQuantities))
+		.catch(err => {
+			console.log(err)
+			res.send(new ProductNotFound())
+		})
+}
+
 
 
 module.exports = {
@@ -187,5 +207,6 @@ module.exports = {
 	uploadImages,
 	deleteProduct,
 	handleImageUpdate,
-	handleImageUpload
+	handleImageUpload,
+	checkQuantity
 }

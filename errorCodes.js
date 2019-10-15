@@ -36,6 +36,16 @@ class CollectionNotFound extends CustomError {
   }
 }
 
+class ProductNotFound extends CustomError {
+  constructor(message = 'The product was not found.') {
+    super(message)
+    this.name = 'ProductNotFound'
+    this.title = 'Product Not Found'
+    this.message = message
+    this.toJSON()
+  }
+}
+
 class InvalidToken extends CustomError {
   constructor(message = 'The token supplied is not valid.') {
     super(message)
@@ -148,4 +158,5 @@ module.exports = {
   InvalidToken,
   NoTokenFound,
   AdminOnly,
+  ProductNotFound
 }
