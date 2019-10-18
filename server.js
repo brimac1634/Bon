@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt-nodejs');
 const path = require('path');
 const https = require('https');
 const knex = require('knex');
-const compression = require('compression');
 
 // setInterval(function() {
 //     https.get('https://bon-vivant.herokuapp.com/');
